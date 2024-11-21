@@ -34,7 +34,8 @@ int main( void )
 
 	while ( true )
 	{		
-		printf( "%11.2f, %11.2f\r\n", afe.read( 0, 0.01, false ), afe.read( 1, 0.01, false ) );
+//		printf( "%11.2f, %11.2f\r\n", afe.read( 0, 0.01 ), afe.read( 1, 0.01 ) );
+		printf( "%ld, %ld\r\n", afe.read_raw( 0, 0.01 ), afe.read_raw( 1, 0.01 ) );
 		wait( 0.05 );
 	}
 }

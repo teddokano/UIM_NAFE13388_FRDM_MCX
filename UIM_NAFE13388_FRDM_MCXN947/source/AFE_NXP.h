@@ -100,20 +100,37 @@ public:
 	 * @param delay ADC result read-out delay after measurement start
 	 * @return ADC read value in micro-volt
 	 */
-	virtual double read( int ch, float delay, bool raw = false );
-
-	/** Read ADC
-	 *
-	 * @param ch logical channel number (0 ~ 15)
-	 */
-	virtual void start( int ch );
+	virtual double read( int ch, float delay );
 
 	/** Read ADC
 	 *
 	 * @param ch logical channel number (0 ~ 15)
 	 * @return ADC read value in micro-volt
 	 */
-	virtual double read( int ch, bool raw = false );
+	virtual double read( int ch );
+
+	/** Read ADC
+	 *	Performs ADC measurement start and read-out.
+	 *	The delay between start and read-out is needed to be specified. 
+	 *	
+	 * @param ch logical channel number (0 ~ 15)
+	 * @param delay ADC result read-out delay after measurement start
+	 * @return ADC read value in micro-volt
+	 */
+	virtual int32_t read_raw( int ch, float delay );
+
+	/** Read ADC
+	 *
+	 * @param ch logical channel number (0 ~ 15)
+	 * @return ADC read value in micro-volt
+	 */
+	virtual int32_t read_raw( int ch );
+	
+	/** Start ADC
+	 *
+	 * @param ch logical channel number (0 ~ 15)
+	 */
+	virtual void start( int ch );
 
 	/** Number of enabled logical channels */
 	int		enabled_channels;

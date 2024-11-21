@@ -73,12 +73,12 @@ void NAFE13388_Base::logical_ch_config( int ch, uint16_t cc0, uint16_t cc1, uint
 		coeff_uV[ ch ]	= (4.0 / (double)(1L << 24)) * 1e6;
 }
 
-double NAFE13388_Base::read( int ch, float delay, bool raw )
+double NAFE13388_Base::read( int ch, float delay )
 {
 	start( ch );
 	wait( delay );
 	
-	return read( ch, raw );
+	return read( ch );
 };
 
 void NAFE13388_Base::start( int ch )
@@ -87,12 +87,22 @@ void NAFE13388_Base::start( int ch )
 	write_r16( 0x2000 );
 }
 
-double NAFE13388_Base::read( int ch, bool raw )
+double NAFE13388_Base::read( int ch )
 {
-	if ( raw )
-		return read_r24( 0x2040 + ch );
-	else
-		return read_r24( 0x2040 + ch ) * coeff_uV[ ch ];
+	return read_r24( 0x2040 + ch ) * coeff_uV[ ch ];
+}
+
+int32_t NAFE13388_Base::read_raw( int ch, float delay )
+{
+	start( ch );
+	wait( delay );
+	
+	return read_raw( ch );
+};
+
+int32_t NAFE13388_Base::read_raw( int ch )
+{
+	return read_r24( 0x2040 + ch );
 }
 
 /* NAFE13388 class ******************************************/
