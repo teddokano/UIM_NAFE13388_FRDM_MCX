@@ -10,34 +10,32 @@
  *
  *  Example:
  *  @code
- *  #include <NAFE13388.h>
+ *  #include	"r01lib.h"
+ *  #include	"NAFE13388_UIM.h"
  *  
- *   NAFE13388 afe;
+ *  SPI				spi( D11, D12, D13, D10 );	//	MOSI, MISO, SCLK, CS
+ *  NAFE13388_UIM	afe( spi );
  *  
- *   void setup() {
- *     Serial.begin(9600);
- *     while (!Serial)
- *  	 ;
+ *  int main( void )
+ *  {
+ *  	printf( "***** Hello, NAFE13388 UIM board! *****\r\n" );
  *  
- *     SPI.begin();
- *     pinMode(SS, OUTPUT);  //  Required for UNO R4
- *     
- *     afe.begin();
+ *  	spi.frequency( 1000 * 1000 );
+ *  	spi.mode( 1 );
  *  
- *     Serial.println("\n***** Hello, NAFE13388! *****");
+ *  	afe.begin();
  *  
- *     afe.logical_ch_config(0, 0x22F0, 0x70AC, 0x5800, 0x0000);
- *     afe.logical_ch_config(1, 0x33F0, 0x70B1, 0x5800, 0x3860);
+ *  	afe.logical_ch_config( 0, 0x1070, 0x0084, 0x2900, 0x0000 );
+ *  	afe.logical_ch_config( 1, 0x2070, 0x0084, 0x2900, 0x0000 );
  *  
- *     Serial.println("logical channel 0 and 1 are shown in micro-volt");
- *   }
+ *  	while ( true )
+ *  	{		
+ *  		printf( "microvolt: %11.2f, %11.2f\r\n", afe.read<NAFE13388::microvolt>( 0, 0.01 ), afe.read<NAFE13388::microvolt>( 1, 0.01 ) );
+ *  		printf( "raw:       %ld, %ld\r\n",       afe.read<NAFE13388::raw>( 0, 0.01 ),       afe.read<NAFE13388::raw>( 1, 0.01 )       );
  *  
- *   void loop() {
- *     Serial.print(afe.read(0));
- *     Serial.print(",  ");
- *     Serial.println(afe.read(1));
- *     delay(100);
- *   }
+ *  		wait( 0.05 );
+ *  	}
+ *  }
  *  @endcode
  */
 
@@ -48,9 +46,15 @@
 #include	"r01lib.h"
 #include	"SPI_for_AFE.h"
 
+
 class NAFE13388_Base : public SPI_for_AFE
 {
 public:	
+	
+	/** ADC readout types */
+	using raw		= int32_t;
+	using microvolt	= double;
+
 	/** Constructor to create a NAFE13388 instance */
 	NAFE13388_Base( SPI& spi );
 
@@ -93,39 +97,22 @@ public:
 	virtual void logical_ch_config( int ch, uint16_t cc0, uint16_t cc1, uint16_t cc2, uint16_t cc3 );
 
 	/** Read ADC
-	 *	Performs ADC measurement start and read-out.
-	 *	The delay between start and read-out is needed to be specified. 
+	 *	Performs ADC read. 
+	 *	If the delay is not given, just the ADC register is read.
+	 *	If the delay is given, measurement is started in this method and read-out after delay.
+	 *	The delay between start and read-out is specified in seconds. 
+	 *	
+	 *	This method need to be called with return type as 
+	 *	    double value = read<NAFE13388::microvolt>( 0, 0.01 );
+	 *	    int32_t value = read<NAFE13388::raw>( 0, 0.01 );
 	 *	
 	 * @param ch logical channel number (0 ~ 15)
-	 * @param delay ADC result read-out delay after measurement start
-	 * @return ADC read value in micro-volt
+	 * @param delay ADC result read-out delay after measurement start if given
+	 * @return ADC readout value
 	 */
-	virtual double read( int ch, float delay );
+	template<class T>
+	T read( int ch, float delay = -1.0 );
 
-	/** Read ADC
-	 *
-	 * @param ch logical channel number (0 ~ 15)
-	 * @return ADC read value in micro-volt
-	 */
-	virtual double read( int ch );
-
-	/** Read ADC
-	 *	Performs ADC measurement start and read-out.
-	 *	The delay between start and read-out is needed to be specified. 
-	 *	
-	 * @param ch logical channel number (0 ~ 15)
-	 * @param delay ADC result read-out delay after measurement start
-	 * @return ADC read value in micro-volt
-	 */
-	virtual int32_t read_raw( int ch, float delay );
-
-	/** Read ADC
-	 *
-	 * @param ch logical channel number (0 ~ 15)
-	 * @return ADC read value in micro-volt
-	 */
-	virtual int32_t read_raw( int ch );
-	
 	/** Start ADC
 	 *
 	 * @param ch logical channel number (0 ~ 15)

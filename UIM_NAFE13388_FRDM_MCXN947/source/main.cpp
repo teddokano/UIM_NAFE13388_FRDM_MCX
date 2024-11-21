@@ -15,6 +15,11 @@ InterruptIn		ADC_nDRDY( D3 );			//	ADC_nDRDY is re-routed to D3 by pin-adapter
 void	logical_ch_config_view( int channel );
 double	single_read( int channel );
 
+enum	output_type	{ RAW, MICRO_VOLT };
+
+using 	microvolt	= NAFE13388::microvolt;
+using 	raw			= NAFE13388::raw;
+
 int main( void )
 {
 	printf( "***** Hello, NAFE13388 UIM board! *****\r\n" );
@@ -36,13 +41,21 @@ int main( void )
 	logical_ch_config_view( 0 );
 	logical_ch_config_view( 1 );
 
+	bool output_type_selection	= MICRO_VOLT;
+//	bool output_type_selection	= RAW;
 
-	printf( "values in micro-volts\r\n" );
+	if ( output_type_selection == MICRO_VOLT )
+		printf( "values in micro-volt\r\n" );
+	else
+		printf( "values in raw\r\n" );
 
 	while ( true )
 	{		
-//		printf( "%11.2f, %11.2f\r\n", afe.read( 0, 0.01 ), afe.read( 1, 0.01 ) );
-		printf( "%ld, %ld\r\n", afe.read_raw( 0, 0.01 ), afe.read_raw( 1, 0.01 ) );
+		if ( output_type_selection == MICRO_VOLT )
+			printf( "%11.2f, %11.2f\r\n", afe.read<microvolt>( 0, 0.01 ), afe.read<microvolt>( 1, 0.01 ) );
+		else
+			printf( "%ld, %ld\r\n", afe.read<raw>( 0, 0.01 ), afe.read<raw>( 1, 0.01 ) );
+
 		wait( 0.05 );
 	}
 }
