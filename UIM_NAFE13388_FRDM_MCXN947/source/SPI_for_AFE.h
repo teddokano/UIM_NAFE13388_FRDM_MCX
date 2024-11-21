@@ -1,14 +1,9 @@
-/** NXP Analog Front End class library for Arduino
+/** NXP Analog Front End class library for MCX
  *
- *  @class   SPI_for_AFE
  *  @author  Tedd OKANO
- *  @version 0.1.1
- *  @date    27-June-2023
  *
- *  Copyright: 2023 Tedd OKANO
+ *  Copyright: 2023 - 2024 Tedd OKANO
  *  Released under the MIT license
- *
- *  A SPI interface class for NXP Analog Front End: NAFE13388
  */
 
 #ifndef ARDUINO_SPI_FOR_AFE_H

@@ -1,8 +1,9 @@
-/*
- * Copyright 2024 NXP
+/** NXP Analog Front End class library for MCX
  *
- * SPDX-License-Identifier: BSD-3-Clause
+ *  @author  Tedd OKANO
  *
+ *  Copyright: 2023 - 2024 Tedd OKANO
+ *  Released under the MIT license
  */
 
 #include	"r01lib.h"
@@ -29,20 +30,14 @@ int main( void )
 
 	afe.begin();
 
-	printf( "0: %06lx\r\n", afe.read_r24( 0x81 ) );
-	afe.write_r24( 0x81, 0xFFFFFF );
-	printf( "1: %06lx\r\n", afe.read_r24( 0x81 ) );
-
-//	afe.logical_ch_config( 0, 0x1070, 0x0084, 0x2900, 0x0000 );
-//	afe.logical_ch_config( 1, 0x2070, 0x0084, 0x2900, 0x0000 );
-	afe.logical_ch_config( 0, 0x1030, 0x0084, 0x2900, 0x0000 );
-	afe.logical_ch_config( 1, 0x2030, 0x0084, 0x2900, 0x0000 );
+	afe.logical_ch_config( 0, 0x1070, 0x0084, 0x2900, 0x0000 );
+	afe.logical_ch_config( 1, 0x2070, 0x0084, 0x2900, 0x0000 );
 
 	logical_ch_config_view( 0 );
 	logical_ch_config_view( 1 );
 
-//	bool output_type_selection	= MICRO_VOLT;
-	bool output_type_selection	= RAW;
+//	constexpr bool output_type_selection	= MICRO_VOLT;
+	constexpr bool output_type_selection	= RAW;
 
 	if ( output_type_selection == MICRO_VOLT )
 		printf( "values in micro-volt\r\n" );

@@ -1,4 +1,4 @@
-/** NXP Analog Front End class library for Arduino
+/** NXP Analog Front End class library for MCX
  *
  *  @class   NAFE13388
  *  @author  Tedd OKANO
