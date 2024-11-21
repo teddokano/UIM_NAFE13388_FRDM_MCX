@@ -46,7 +46,6 @@
 #include	"r01lib.h"
 #include	"SPI_for_AFE.h"
 
-
 class NAFE13388_Base : public SPI_for_AFE
 {
 public:	
@@ -54,6 +53,7 @@ public:
 	/** ADC readout types */
 	using raw		= int32_t;
 	using microvolt	= double;
+	constexpr static float immidiate_read	= -1.0;
 
 	/** Constructor to create a NAFE13388 instance */
 	NAFE13388_Base( SPI& spi );
@@ -111,7 +111,7 @@ public:
 	 * @return ADC readout value
 	 */
 	template<class T>
-	T read( int ch, float delay = -1.0 );
+	T read( int ch, float delay = immidiate_read );
 
 	/** Start ADC
 	 *
