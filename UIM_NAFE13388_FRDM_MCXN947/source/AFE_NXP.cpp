@@ -76,24 +76,14 @@ void NAFE13388_Base::logical_ch_config( int ch, uint16_t cc0, uint16_t cc1, uint
 template<>
 double NAFE13388_Base::read( int ch, float delay )
 {
-	if ( delay >= 0.0 )
-	{
-		start( ch );
-		wait( delay );
-	}
-
+	start_and_delay( ch, delay );
 	return read_r24( 0x2040 + ch ) * coeff_uV[ ch ];
 };
 
 template<> 
 int32_t NAFE13388_Base::read( int ch, float delay )
 {
-	if ( delay >= 0.0 )
-	{
-		start( ch );
-		wait( delay );
-	}
-	
+	start_and_delay( ch, delay );
 	return read_r24( 0x2040 + ch );
 };
 
@@ -101,6 +91,15 @@ void NAFE13388_Base::start( int ch )
 {
 	write_r16( ch );
 	write_r16( 0x2000 );
+}
+
+void NAFE13388_Base::start_and_delay( int ch, float delay )
+{
+	if ( delay >= 0.0 )
+	{
+		start( ch );
+		wait( delay );
+	}
 }
 
 /* NAFE13388 class ******************************************/

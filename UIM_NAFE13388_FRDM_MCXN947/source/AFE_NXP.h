@@ -124,6 +124,9 @@ public:
 	
 	/** Coefficient to convert from ADC read value to micro-volt */
 	double	coeff_uV[ 16 ];
+
+private:
+	void start_and_delay( int ch, float delay );
 };
 
 class NAFE13388 : public NAFE13388_Base

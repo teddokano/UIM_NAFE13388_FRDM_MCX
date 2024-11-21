@@ -41,8 +41,8 @@ int main( void )
 	logical_ch_config_view( 0 );
 	logical_ch_config_view( 1 );
 
-	bool output_type_selection	= MICRO_VOLT;
-//	bool output_type_selection	= RAW;
+//	bool output_type_selection	= MICRO_VOLT;
+	bool output_type_selection	= RAW;
 
 	if ( output_type_selection == MICRO_VOLT )
 		printf( "values in micro-volt\r\n" );
