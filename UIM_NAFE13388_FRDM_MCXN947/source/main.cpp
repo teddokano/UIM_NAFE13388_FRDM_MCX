@@ -24,11 +24,18 @@ int main( void )
 
 	afe.begin();
 
-	afe.logical_ch_config( 0, 0x1070, 0x0084, 0x2900, 0x0000 );
-	afe.logical_ch_config( 1, 0x2070, 0x0084, 0x2900, 0x0000 );
+	printf( "0: %06lx\r\n", afe.read_r24( 0x81 ) );
+	afe.write_r24( 0x81, 0xFFFFFF );
+	printf( "1: %06lx\r\n", afe.read_r24( 0x81 ) );
+
+//	afe.logical_ch_config( 0, 0x1070, 0x0084, 0x2900, 0x0000 );
+//	afe.logical_ch_config( 1, 0x2070, 0x0084, 0x2900, 0x0000 );
+	afe.logical_ch_config( 0, 0x1030, 0x0084, 0x2900, 0x0000 );
+	afe.logical_ch_config( 1, 0x2030, 0x0084, 0x2900, 0x0000 );
 
 	logical_ch_config_view( 0 );
 	logical_ch_config_view( 1 );
+
 
 	printf( "values in micro-volts\r\n" );
 
