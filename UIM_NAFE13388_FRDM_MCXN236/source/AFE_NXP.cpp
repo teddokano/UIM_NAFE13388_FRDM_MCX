@@ -81,18 +81,17 @@ void NAFE13388_Base::logical_ch_config( int ch, uint16_t cc0, uint16_t cc1, uint
 		coeff_uV[ ch ]	= (4.0 / (double)(1L << 24)) * 1e6;
 }
 
-template<>
-double NAFE13388_Base::read( int ch, float delay )
-{
-	start_and_delay( ch, delay );
-	return read_r24( 0x2040 + ch ) * coeff_uV[ ch ];
-};
-
 template<> 
 int32_t NAFE13388_Base::read( int ch, float delay )
 {
 	start_and_delay( ch, delay );
 	return read_r24( 0x2040 + ch );
+};
+
+template<>
+double NAFE13388_Base::read( int ch, float delay )
+{
+	return read<int32_t>( ch, delay ) * coeff_uV[ ch ];
 };
 
 void NAFE13388_Base::start( int ch )
