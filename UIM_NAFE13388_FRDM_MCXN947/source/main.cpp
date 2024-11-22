@@ -49,7 +49,7 @@ int main( void )
 		if ( output_type_selection == MICRO_VOLT )
 			printf( "%11.2f, %11.2f\r\n", afe.read<microvolt>( 0, 0.01 ), afe.read<microvolt>( 1, 0.01 ) );
 		else
-			printf( "%ld, %ld\r\n", afe.read<raw>( 0, 0.01 ), afe.read<raw>( 1, 0.01 ) );
+			printf( "%8ld, %8ld\r\n", afe.read<raw>( 0, 0.01 ), afe.read<raw>( 1, 0.01 ) );
 
 		wait( 0.05 );
 	}
