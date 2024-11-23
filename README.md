@@ -2,7 +2,7 @@
 
 ## What is this?   
 NXP Analog-Front-End chip: NAFE13388 class driver and sample code for MCX series microcontrollers. 
-This sample code works on those evaluation boards: *＊ [X-NAFE13388-UIM](https://www.nxp.com/design/design-center/development-boards-and-designs/analog-toolbox/arduino-shields-solutions/nafe13388-uim-8-channel-universal-input-afe-arduino-shield-board:NAFE13388-UIM) *＊ and FRDM-MCX. 
+This sample code works on those evaluation boards: **[X-NAFE13388-UIM](https://www.nxp.com/design/design-center/development-boards-and-designs/analog-toolbox/arduino-shields-solutions/nafe13388-uim-8-channel-universal-input-afe-arduino-shield-board:NAFE13388-UIM)** and FRDM-MCX. 
 Currently supported MCU boards are..
 - [FRDM-MCXN947](https://www.nxp.com/design/design-center/development-boards-and-designs/general-purpose-mcus/frdm-development-board-for-mcx-n94-n54-mcus:FRDM-MCXN947)
 - [FRDM-MCXN236](https://www.nxp.com/design/design-center/development-boards-and-designs/general-purpose-mcus/frdm-development-board-for-mcx-n23x-mcus:FRDM-MCXN236)
