@@ -10,7 +10,7 @@ Currently supported MCU boards are..
 
 The sample code can build on MCUXpresso. 
 
-![UIM_on_FRDM.jpg]("./image/UIM_on_FRDM.jpg")  
-![NAFE13388.jpg]("./image/NAFE13388.jpg")
+![UIM_on_FRDM.jpg](./image/UIM_on_FRDM.jpg)  
+![NAFE13388.jpg](./image/NAFE13388.jpg)
 
 /Users/tedd/dev/mcuxpresso/UIM_NAFE13388_FRDM_MCX/README.md
