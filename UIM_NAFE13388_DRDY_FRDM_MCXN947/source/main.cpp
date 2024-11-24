@@ -11,26 +11,19 @@
 #include 	<iostream>
 #include	<iomanip>
 
-SPI				spi( D11, D12, D13, D10 );	//	MOSI, MISO, SCLK, CS
-NAFE13388_UIM	afe( spi );
-InterruptIn		ADC_nDRDY( D4 );			//	ADC_nDRDY
-volatile bool	drdy_wait;
-
-void	logical_ch_config_view( int channel );
-void	register16_dump( std::vector<int> &reg );
-
-enum	output_type	{ RAW, MICRO_VOLT };
-
-using 	microvolt	= NAFE13388::microvolt;
-using 	raw			= NAFE13388::raw;
-
+using 	microvolt	= NAFE13388_UIM::microvolt;
+using 	raw			= NAFE13388_UIM::raw;
 using	std::cout;
 using	std::endl;
 
-void DRDY_int_handler( void )
-{
-	drdy_wait	= false;
-}
+SPI				spi( D11, D12, D13, D10 );	//	MOSI, MISO, SCLK, CS
+NAFE13388_UIM	afe( spi );
+InterruptIn		ADC_nDRDY( D4 );			//	Uses interrupt by ADC_nDRDY pin
+volatile bool	drdy_wait;
+
+void	DRDY_int_handler( void );
+void	logical_ch_config_view( int channel );
+void	register16_dump( std::vector<int> &reg );
 
 int main( void )
 {
@@ -60,14 +53,20 @@ int main( void )
 			while ( drdy_wait )
 				;
 
-//			auto	data = afe.read<microvolt>( ch );	//	get data in mictovolt
-			auto	data = afe.read<raw>( ch );			//	get raw data in integer
+			// Enable one of following lines
+			auto	data = afe.read<microvolt>( ch );	//	get data in mictovolt
+//			auto	data = afe.read<raw>( ch );			//	get raw data in integer
 
 			cout << std::setw( 11 ) << data << ", ";
 		}
 		cout << endl;
 		wait( 0.05 );
 	}
+}
+
+void DRDY_int_handler( void )
+{
+	drdy_wait	= false;
 }
 
 void logical_ch_config_view( int channel )
@@ -93,7 +92,8 @@ void register16_dump( std::vector<int> &reg )
 			cout
 				<< "  "
 				<< std::setw( 6 )
-				<< i << ": "
+				<< i
+				<< ": "
 				<< std::setw( 6 )
 				<< afe.read_r16( i )
 				<< endl;
