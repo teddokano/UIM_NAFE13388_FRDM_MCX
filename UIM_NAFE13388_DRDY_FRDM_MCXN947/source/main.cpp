@@ -21,6 +21,8 @@ NAFE13388_UIM	afe( spi );
 InterruptIn		ADC_nDRDY( D4 );			//	Uses interrupt by ADC_nDRDY pin
 volatile bool	drdy_wait;
 
+constexpr uint32_t	timeout_limit	= 100000000;
+
 void	DRDY_int_handler( void );
 void	logical_ch_config_view( int channel );
 void	register16_dump( std::vector<uint16_t> &reg_list );
@@ -29,6 +31,8 @@ int main( void )
 {
 	cout << "***** Hello, NAFE13388 UIM board! *****" << endl;
 	cout << std::setw( 11 ) << std::right << std::fixed << std::setprecision(2);
+
+	volatile auto	timeout_count	= timeout_limit;
 
 	spi.frequency( 1000 * 1000 );
 	spi.mode( 1 );
@@ -47,11 +51,19 @@ int main( void )
 	{
 		for ( auto ch = 0; ch < 2; ch++ )
 		{
-			drdy_wait	= true;
+			drdy_wait		= true;
+			timeout_count	= timeout_limit;
+
 			afe.start( ch );
 
-			while ( drdy_wait )
+			while ( drdy_wait && --timeout_count )
 				;
+
+			if ( !timeout_count )
+			{
+				cout << "DRDY signal wait timeout" <<endl;
+				continue;
+			}
 
 			// Enable one of following lines
 			auto	data = afe.read<microvolt>( ch );	//	get data in mictovolt
