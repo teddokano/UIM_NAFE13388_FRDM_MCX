@@ -23,7 +23,7 @@ volatile bool	drdy_wait;
 
 void	DRDY_int_handler( void );
 void	logical_ch_config_view( int channel );
-void	register16_dump( std::vector<int> &reg );
+void	register16_dump( std::vector<uint16_t> &reg_list );
 
 int main( void )
 {
@@ -74,28 +74,28 @@ void logical_ch_config_view( int channel )
 	cout << "logical channel " << std::setw( 2 ) << channel << endl;
 	afe.write_r16( channel );
 
-	std::vector<int>	reg = { 0x0020, 0x0021, 0x0022, 0x0023 };
-	register16_dump( reg );
+	std::vector<uint16_t>	reg_list = { 0x0020, 0x0021, 0x0022, 0x0023 };
+	register16_dump( reg_list );
 
 	cout << endl;
 }
 
-void register16_dump( std::vector<int> &reg )
+void register16_dump( std::vector<uint16_t> &reg_list )
 {
 	cout <<  std::showbase << std::hex << std::setfill( '0' ) << std::internal;
 
 	for_each(
-		reg.begin(),
-		reg.end(),
-		[]( auto i )
+		reg_list.begin(),
+		reg_list.end(),
+		[]( auto reg )
 		{
 			cout
 				<< "  "
 				<< std::setw( 6 )
-				<< i
+				<< reg
 				<< ": "
 				<< std::setw( 6 )
-				<< afe.read_r16( i )
+				<< afe.read_r16( reg )
 				<< endl;
 		}
 	);
