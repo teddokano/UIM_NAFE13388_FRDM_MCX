@@ -25,7 +25,7 @@ constexpr uint32_t	timeout_limit	= 100000000;
 
 void	DRDY_int_handler( void );
 void	logical_ch_config_view( int channel );
-void	register16_dump( std::vector<uint16_t> &reg_list );
+void	register16_dump( const std::vector<uint16_t> &reg_list );
 
 int main( void )
 {
@@ -92,7 +92,7 @@ void logical_ch_config_view( int channel )
 	cout << endl;
 }
 
-void register16_dump( std::vector<uint16_t> &reg_list )
+void register16_dump( const std::vector<uint16_t> &reg_list )
 {
 	cout <<  std::showbase << std::hex << std::setfill( '0' ) << std::internal;
 
