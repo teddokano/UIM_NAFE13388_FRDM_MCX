@@ -62,7 +62,7 @@ int main( void )
 
 			// Enable one of following lines
 			printf( " %11.2f,", afe.read<microvolt>( ch ) );
-			printf( " %8ld,",   afe.read<raw>( ch ) );
+			//printf( " %8ld,",   afe.read<raw>( ch ) );
 		}
 		printf( "\r\n" );
 		wait( 0.05 );
