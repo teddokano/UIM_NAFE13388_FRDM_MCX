@@ -64,10 +64,8 @@ public:
 	/** Begin the device operation
 	 *
 	 *	NAFE13388 initialization. It does following steps
-	 *	(1) Set pins 2 and 3 are input for nINT and nDRDY
-	 *	(2) Set pins 5 and 6 are output and fixed to HIGH for ADC_SYN and ADC_nRESET
-	 *	(3) Call reset()
-	 *	(4) Call boot()
+	 *	(1) Call reset()
+	 *	(2) Call boot()
 	 */
 	virtual void begin( void );
 
