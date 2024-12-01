@@ -8,13 +8,9 @@
 
 #include	"r01lib.h"
 #include	"NAFE13388_UIM.h"
-#include 	<iostream>
-#include	<iomanip>
 
 using 	microvolt	= NAFE13388_UIM::microvolt;
 using 	raw			= NAFE13388_UIM::raw;
-using	std::cout;
-using	std::endl;
 
 SPI				spi( D11, D12, D13, D10 );	//	MOSI, MISO, SCLK, CS
 NAFE13388_UIM	afe( spi );
@@ -29,8 +25,7 @@ void	register16_dump( const std::vector<uint16_t> &reg_list );
 
 int main( void )
 {
-	cout << "***** Hello, NAFE13388 UIM board! *****" << endl;
-	cout << std::setw( 11 ) << std::right << std::fixed << std::setprecision(2);
+	printf( "***** Hello, NAFE13388 UIM board! *****\r\n" );
 
 	volatile auto	timeout_count	= timeout_limit;
 
@@ -61,17 +56,15 @@ int main( void )
 
 			if ( !timeout_count )
 			{
-				cout << "DRDY signal wait timeout" <<endl;
+				printf( "DRDY signal wait timeout\r\n" );
 				continue;
 			}
 
 			// Enable one of following lines
-			auto	data = afe.read<microvolt>( ch );	//	get data in mictovolt
-//			auto	data = afe.read<raw>( ch );			//	get raw data in integer
-
-			cout << std::setw( 11 ) << data << ", ";
+			printf( " %11.2f,", afe.read<microvolt>( ch ) );
+			//printf( " %8ld,",   afe.read<raw>( ch ) );
 		}
-		cout << endl;
+		printf( "\r\n" );
 		wait( 0.05 );
 	}
 }
@@ -83,34 +76,20 @@ void DRDY_int_handler( void )
 
 void logical_ch_config_view( int channel )
 {
-	cout << "logical channel " << std::setw( 2 ) << channel << endl;
+	printf( "logical channel %02d\r\n", channel );
 	afe.write_r16( channel );
 
 	std::vector<uint16_t>	reg_list = { 0x0020, 0x0021, 0x0022, 0x0023 };
 	register16_dump( reg_list );
 
-	cout << endl;
+	printf( "\r\n" );
 }
 
 void register16_dump( const std::vector<uint16_t> &reg_list )
 {
-	cout <<  std::showbase << std::hex << std::setfill( '0' ) << std::internal;
-
 	for_each(
 		reg_list.begin(),
 		reg_list.end(),
-		[]( auto reg )
-		{
-			cout
-				<< "  "
-				<< std::setw( 6 )
-				<< reg
-				<< ": "
-				<< std::setw( 6 )
-				<< afe.read_r16( reg )
-				<< endl;
-		}
+		[]( auto reg ) { printf( "  0x%04X: 0x%04X\r\n", reg, afe.read_r16( reg ) ); }
 	);
-
-	cout << std::noshowbase << std::dec << std::setfill( ' ' ) << std::right;
 }
