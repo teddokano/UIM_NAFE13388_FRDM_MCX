@@ -9,8 +9,8 @@
 #include	"r01lib.h"
 #include	"NAFE13388_UIM.h"
 
-using 	microvolt	= NAFE13388_UIM::microvolt;
-using 	raw			= NAFE13388_UIM::raw;
+using 	microvolt_t	= NAFE13388_UIM::microvolt_t;
+using 	raw_t		= NAFE13388_UIM::raw_t;
 
 SPI				spi( D11, D12, D13, D10 );	//	MOSI, MISO, SCLK, CS
 NAFE13388_UIM	afe( spi );
@@ -61,8 +61,8 @@ int main( void )
 			}
 
 			// Enable one of following lines
-			printf( " %11.2f,", afe.read<microvolt>( ch ) );
-			//printf( " %8ld,",   afe.read<raw>( ch ) );
+			printf( " %11.2f,", afe.read<microvolt_t>( ch ) );
+			//printf( " %8ld,",   afe.read<raw_t>( ch ) );
 		}
 		printf( "\r\n" );
 		wait( 0.05 );

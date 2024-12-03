@@ -30,8 +30,8 @@
  *  
  *  	while ( true )
  *  	{		
- *  		printf( "microvolt: %11.2f, %11.2f\r\n", afe.read<NAFE13388::microvolt>( 0, 0.01 ), afe.read<NAFE13388::microvolt>( 1, 0.01 ) );
- *  		printf( "raw:       %ld, %ld\r\n",       afe.read<NAFE13388::raw>( 0, 0.01 ),       afe.read<NAFE13388::raw>( 1, 0.01 )       );
+ *  		printf( "microvolt: %11.2f, %11.2f\r\n", afe.read<NAFE13388::microvolt_t>( 0, 0.01 ), afe.read<NAFE13388::microvolt_t>( 1, 0.01 ) );
+ *  		printf( "raw:       %ld, %ld\r\n",       afe.read<NAFE13388::raw_t>( 0, 0.01 ),       afe.read<NAFE13388::raw_t>( 1, 0.01 )       );
  *  
  *  		wait( 0.05 );
  *  	}
@@ -51,8 +51,8 @@ class NAFE13388_Base : public SPI_for_AFE
 public:	
 	
 	/** ADC readout types */
-	using raw		= int32_t;
-	using microvolt	= double;
+	using raw_t			= int32_t;
+	using microvolt_t	= double;
 	constexpr static float immidiate_read	= -1.0;
 
 	/** Constructor to create a NAFE13388 instance */
@@ -103,8 +103,8 @@ public:
 	 *	The delay between start and read-out is specified in seconds. 
 	 *	
 	 *	This method need to be called with return type as 
-	 *	    double value = read<NAFE13388::microvolt>( 0, 0.01 );
-	 *	    int32_t value = read<NAFE13388::raw>( 0, 0.01 );
+	 *	    double value = read<NAFE13388::microvolt_t>( 0, 0.01 );
+	 *	    int32_t value = read<NAFE13388::raw_t>( 0, 0.01 );
 	 *	
 	 * @param ch logical channel number (0 ~ 15)
 	 * @param delay ADC result read-out delay after measurement start if given
