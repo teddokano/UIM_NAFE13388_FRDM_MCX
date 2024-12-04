@@ -1,4 +1,4 @@
-/** NXP Analog Front End class library for MCX
+/** Sample code for NXP Analog Front End class library for MCX
  *
  *  @author  Tedd OKANO
  *
@@ -7,10 +7,7 @@
  */
 
 #include	"r01lib.h"
-#include	"NAFE13388_UIM.h"
-
-using 	microvolt_t	= NAFE13388_UIM::microvolt_t;
-using 	raw_t		= NAFE13388_UIM::raw_t;
+#include	"afe/NAFE13388_UIM.h"
 
 SPI				spi( D11, D12, D13, D10 );	//	MOSI, MISO, SCLK, CS
 NAFE13388_UIM	afe( spi );
@@ -22,6 +19,11 @@ constexpr uint32_t	timeout_limit	= 100000000;
 void	DRDY_int_handler( void );
 void	logical_ch_config_view( int channel );
 void	register16_dump( const std::vector<uint16_t> &reg_list );
+
+enum	output_type	{ RAW, MICRO_VOLT };
+
+using 	microvolt_t	= NAFE13388_UIM::microvolt_t;
+using 	raw_t		= NAFE13388_UIM::raw_t;
 
 int main( void )
 {
@@ -42,6 +44,19 @@ int main( void )
 
 	ADC_nDRDY.rise( DRDY_int_handler );
 
+	//
+	//	** ENABLE ONE OF NEXT TWO LINES **
+	//
+
+	constexpr bool output_type_selection	= MICRO_VOLT;
+//	constexpr bool output_type_selection	= RAW;
+
+	if ( output_type_selection == MICRO_VOLT )
+		printf( "values in micro-volt\r\n" );
+	else
+		printf( "values in raw\r\n" );
+
+
 	while ( true )
 	{
 		for ( auto ch = 0; ch < 2; ch++ )
@@ -60,9 +75,10 @@ int main( void )
 				continue;
 			}
 
-			// Enable one of following lines
-			printf( " %11.2f,", afe.read<microvolt_t>( ch ) );
-			//printf( " %8ld,",   afe.read<raw_t>( ch ) );
+			if ( output_type_selection == MICRO_VOLT )
+				printf( " %11.2f,", afe.read<microvolt_t>( ch ) );
+			else
+				printf( " %8ld,",   afe.read<raw_t>( ch ) );
 		}
 		printf( "\r\n" );
 		wait( 0.05 );
