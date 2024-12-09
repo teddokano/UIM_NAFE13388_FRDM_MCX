@@ -230,7 +230,7 @@
 								<option id="com.crt.advproject.link.cpp.multicore.master.941702546" name="Multicore master" superClass="com.crt.advproject.link.cpp.multicore.master"/>
 								<option id="com.crt.advproject.link.cpp.thumb.107780019" name="Thumb mode" superClass="com.crt.advproject.link.cpp.thumb" value="true" valueType="boolean"/>
 								<option id="com.crt.advproject.link.memory.load.image.cpp.2086370679" name="Plain load image" superClass="com.crt.advproject.link.memory.load.image.cpp" value="false;" valueType="string"/>
-								<option defaultValue="com.crt.advproject.heapAndStack.mcuXpressoStyle.cpp" id="com.crt.advproject.link.memory.heapAndStack.style.cpp.1107929006" name="Heap and Stack placement" superClass="com.crt.advproject.link.memory.heapAndStack.style.cpp" valueType="enumerated"/>
+								<option defaultValue="com.crt.advproject.heapAndStack.mcuXpressoStyle.cpp" id="com.crt.advproject.link.memory.heapAndStack.style.cpp.1107929006" name="Heap and Stack placement" superClass="com.crt.advproject.link.memory.heapAndStack.style.cpp" value="Default" valueType="enumerated"/>
 								<option id="com.crt.advproject.link.memory.heapAndStack.cpp.1236685100" name="Heap and Stack options" superClass="com.crt.advproject.link.memory.heapAndStack.cpp" value="&amp;Heap:Default;Post Data;Default&amp;Stack:Default;End;Default" valueType="string"/>
 								<option id="com.crt.advproject.link.memory.data.cpp.1148788317" name="Global data placement" superClass="com.crt.advproject.link.memory.data.cpp" value="Default" valueType="string"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="true" id="com.crt.advproject.link.memory.sections.cpp.969235812" name="Extra linker script input sections" superClass="com.crt.advproject.link.memory.sections.cpp" valueType="stringList"/>
@@ -266,7 +266,7 @@
 								<option id="com.crt.advproject.link.cpp.lto.optmization.level.309042851" name="Link-time optimization level" superClass="com.crt.advproject.link.cpp.lto.optmization.level"/>
 								<option id="com.crt.advproject.link.cpp.fpu.1080020321" name="Floating point" superClass="com.crt.advproject.link.cpp.fpu" value="com.crt.advproject.link.cpp.fpu.fpv5sp.hard" valueType="enumerated"/>
 								<option id="com.crt.advproject.link.cpp.manage.1879964678" name="Manage linker script" superClass="com.crt.advproject.link.cpp.manage" value="true" valueType="boolean"/>
-								<option id="com.crt.advproject.link.cpp.script.510673545" name="Linker script" superClass="com.crt.advproject.link.cpp.script" value="UIM_NAFE13388_simple_FRDM_MCXN947_Debug.ld" valueType="string"/>
+								<option id="com.crt.advproject.link.cpp.script.510673545" name="Linker script" superClass="com.crt.advproject.link.cpp.script" value="&quot;UIM_NAFE13388_simple_FRDM_MCXN947_Debug.ld&quot;" valueType="string"/>
 								<option id="com.crt.advproject.link.cpp.scriptdir.459592900" name="Script path" superClass="com.crt.advproject.link.cpp.scriptdir" value="" valueType="string"/>
 								<option id="com.crt.advproject.link.cpp.crpenable.610193849" name="Enable automatic placement of Code Read Protection field in image" superClass="com.crt.advproject.link.cpp.crpenable"/>
 								<option id="com.crt.advproject.link.cpp.flashconfigenable.373753028" name="Enable automatic placement of Flash Configuration field in image" superClass="com.crt.advproject.link.cpp.flashconfigenable" value="true" valueType="boolean"/>
@@ -284,7 +284,7 @@
 								<option id="com.crt.advproject.link.cpp.sgstubenable.1854653270" name="Enable generation of Secure Gateway Import Library" superClass="com.crt.advproject.link.cpp.sgstubenable"/>
 								<option id="com.crt.advproject.link.cpp.nonsecureobject.93399633" name="Secure Gateway Import Library" superClass="com.crt.advproject.link.cpp.nonsecureobject"/>
 								<option id="com.crt.advproject.link.cpp.inimplib.523084814" name="Input Secure Gateway Import Library" superClass="com.crt.advproject.link.cpp.inimplib"/>
-								<option id="gnu.cpp.link.option.group.659619541" name="Group libraries (-Wl,--start-group  ...  -Wl,--end-group)" superClass="gnu.cpp.link.option.group"/>
+								<option id="gnu.cpp.link.option.group.2082307529" superClass="gnu.cpp.link.option.group"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.8248052" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>
@@ -584,7 +584,7 @@
 							<tool id="com.crt.advproject.link.cpp.exe.release.262858611" name="MCU C++ Linker" superClass="com.crt.advproject.link.cpp.exe.release">
 								<option id="com.crt.advproject.link.cpp.thumb.574712117" name="Thumb mode" superClass="com.crt.advproject.link.cpp.thumb" value="true" valueType="boolean"/>
 								<option id="com.crt.advproject.link.memory.load.image.cpp.1220178947" name="Plain load image" superClass="com.crt.advproject.link.memory.load.image.cpp" value="" valueType="string"/>
-								<option defaultValue="com.crt.advproject.heapAndStack.mcuXpressoStyle.cpp" id="com.crt.advproject.link.memory.heapAndStack.style.cpp.468441943" name="Heap and Stack placement" superClass="com.crt.advproject.link.memory.heapAndStack.style.cpp" valueType="enumerated"/>
+								<option defaultValue="com.crt.advproject.heapAndStack.mcuXpressoStyle.cpp" id="com.crt.advproject.link.memory.heapAndStack.style.cpp.468441943" name="Heap and Stack placement" superClass="com.crt.advproject.link.memory.heapAndStack.style.cpp" value="Default" valueType="enumerated"/>
 								<option id="com.crt.advproject.link.memory.heapAndStack.cpp.827955540" name="Heap and Stack options" superClass="com.crt.advproject.link.memory.heapAndStack.cpp" value="&amp;Heap:Default;Post Data;Default&amp;Stack:Default;End;Default" valueType="string"/>
 								<option id="com.crt.advproject.link.memory.data.cpp.443169269" name="Global data placement" superClass="com.crt.advproject.link.memory.data.cpp" value="" valueType="string"/>
 								<option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="true" id="com.crt.advproject.link.memory.sections.cpp.1833996610" name="Extra linker script input sections" superClass="com.crt.advproject.link.memory.sections.cpp" valueType="stringList"/>
@@ -621,7 +621,7 @@
 								<option id="com.crt.advproject.link.cpp.lto.optmization.level.679368012" name="Link-time optimization level" superClass="com.crt.advproject.link.cpp.lto.optmization.level"/>
 								<option id="com.crt.advproject.link.cpp.fpu.924294152" name="Floating point" superClass="com.crt.advproject.link.cpp.fpu" value="com.crt.advproject.link.cpp.fpu.fpv5sp.hard" valueType="enumerated"/>
 								<option id="com.crt.advproject.link.cpp.manage.996391697" name="Manage linker script" superClass="com.crt.advproject.link.cpp.manage" value="true" valueType="boolean"/>
-								<option id="com.crt.advproject.link.cpp.script.2078675897" name="Linker script" superClass="com.crt.advproject.link.cpp.script" value="UIM_NAFE13388_simple_FRDM_MCXN947_Release.ld" valueType="string"/>
+								<option id="com.crt.advproject.link.cpp.script.2078675897" name="Linker script" superClass="com.crt.advproject.link.cpp.script" value="&quot;UIM_NAFE13388_simple_FRDM_MCXN947_Release.ld&quot;" valueType="string"/>
 								<option id="com.crt.advproject.link.cpp.scriptdir.1075638288" name="Script path" superClass="com.crt.advproject.link.cpp.scriptdir"/>
 								<option id="com.crt.advproject.link.cpp.crpenable.792271003" name="Enable automatic placement of Code Read Protection field in image" superClass="com.crt.advproject.link.cpp.crpenable"/>
 								<option id="com.crt.advproject.link.cpp.flashconfigenable.1657540099" name="Enable automatic placement of Flash Configuration field in image" superClass="com.crt.advproject.link.cpp.flashconfigenable" value="true" valueType="boolean"/>
@@ -640,7 +640,7 @@
 								<option id="com.crt.advproject.link.cpp.sgstubenable.215681974" name="Enable generation of Secure Gateway Import Library" superClass="com.crt.advproject.link.cpp.sgstubenable"/>
 								<option id="com.crt.advproject.link.cpp.nonsecureobject.184122211" name="Secure Gateway Import Library" superClass="com.crt.advproject.link.cpp.nonsecureobject"/>
 								<option id="com.crt.advproject.link.cpp.inimplib.73235881" name="Input Secure Gateway Import Library" superClass="com.crt.advproject.link.cpp.inimplib"/>
-								<option id="gnu.cpp.link.option.group.759374234" name="Group libraries (-Wl,--start-group  ...  -Wl,--end-group)" superClass="gnu.cpp.link.option.group"/>
+								<option id="gnu.cpp.link.option.group.1509810570" superClass="gnu.cpp.link.option.group"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.321971275" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
 									<additionalInput kind="additionalinput" paths="$(LIBS)"/>

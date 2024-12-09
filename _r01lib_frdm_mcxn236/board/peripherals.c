@@ -6,11 +6,11 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Peripherals v14.0
+product: Peripherals v15.0
 processor: MCXN236
 package_id: MCXN236VDF
 mcu_data: ksdk2_0
-processor_version: 15.0.0
+processor_version: 16.3.0
 functionalGroups:
 - name: BOARD_InitPeripherals
   UUID: ef7ecff6-0855-450c-9af8-8018a5670f27
@@ -63,7 +63,7 @@ instance:
 - type: 'nvic'
 - mode: 'general'
 - custom_name_enabled: 'false'
-- type_id: 'nvic_57b5eef3774cc60acaede6f5b8bddc67'
+- type_id: 'nvic'
 - functional_group: 'BOARD_InitPeripherals'
 - peripheral: 'NVIC'
 - config_sets:
@@ -88,7 +88,7 @@ instance:
 - type: 'systick'
 - mode: 'GENERAL'
 - custom_name_enabled: 'false'
-- type_id: 'systick_835fd8dd4fe722f5394f39cf587e71ab'
+- type_id: 'systick'
 - functional_group: 'BOARD_InitPeripherals'
 - peripheral: 'SysTick0'
 - config_sets:

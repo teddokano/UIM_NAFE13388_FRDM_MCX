@@ -18,11 +18,11 @@
 /* clang-format off */
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Clocks v13.0
+product: Clocks v14.0
 processor: MCXA153
 package_id: MCXA153VLH
 mcu_data: ksdk2_0
-processor_version: 15.0.0
+processor_version: 16.3.0
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 
@@ -64,7 +64,9 @@ outputs:
 - {id: MAIN_clock.outFreq, value: 12 MHz}
 - {id: Slow_clock.outFreq, value: 3 MHz}
 - {id: System_clock.outFreq, value: 12 MHz}
+- {id: TRACE_clock.outFreq, value: 12 MHz}
 - {id: UTICK_clock.outFreq, value: 1 MHz}
+- {id: WWDT0_clock.outFreq, value: 1 MHz}
 settings:
 - {id: SCGMode, value: SIRC}
 - {id: FRO_HF_PERIPHERALS_EN_CFG, value: Disabled}
@@ -103,6 +105,9 @@ void BOARD_BootClockFRO12M(void)
         (void)SPC_SetSRAMOperateVoltage(SPC0, &sramOption);
     }
 
+
+    /*!< Set up system dividers */
+    CLOCK_SetClockDiv(kCLOCK_DivAHBCLK, 1U);               /* !< Set AHBCLKDIV divider to value 1 */
     CLOCK_SetupFRO12MClocking();                /*!< Setup FRO12M clock */
 
     CLOCK_AttachClk(kFRO12M_to_MAIN_CLK);       /* !< Switch MAIN_CLK to FRO12M */
@@ -122,15 +127,17 @@ void BOARD_BootClockFRO12M(void)
     }
 
     /*!< Set up clock selectors - Attach clocks to the peripheries */
+    CLOCK_AttachClk(kCPU_CLK_to_TRACE);                    /* !< Switch TRACE to CPU_CLK */
 
     /* Configure FREQME clock */
     CLOCK_EnableClock(kCLOCK_InputMux);
-    RESET_PeripheralReset(kINPUTMUX0_RST_SHIFT_RSTn);
+    RESET_ReleasePeripheralReset(kINPUTMUX0_RST_SHIFT_RSTn);
     INPUTMUX0->FREQMEAS_REF = INPUTMUX_FREQMEAS_REF_INP(2);
     INPUTMUX0->FREQMEAS_TAR = INPUTMUX_FREQMEAS_TAR_INP(2);
 
     /*!< Set up dividers */
-    CLOCK_SetClockDiv(kCLOCK_DivAHBCLK, 1U);               /* !< Set AHBCLKDIV divider to value 1 */
+    CLOCK_SetClockDiv(kCLOCK_DivTRACE, 1U);                /* !< Set TRACECLKDIV divider to value 1 */
+    CLOCK_SetClockDiv(kCLOCK_DivWWDT0, 1U);                /* !< Set WWDT0CLKDIV divider to value 1 */
 
     /* Set SystemCoreClock variable */
     SystemCoreClock = BOARD_BOOTCLOCKFRO12M_CORE_CLOCK;
@@ -154,7 +161,9 @@ outputs:
 - {id: MAIN_clock.outFreq, value: 48 MHz}
 - {id: Slow_clock.outFreq, value: 6 MHz}
 - {id: System_clock.outFreq, value: 24 MHz}
+- {id: TRACE_clock.outFreq, value: 24 MHz}
 - {id: UTICK_clock.outFreq, value: 1 MHz}
+- {id: WWDT0_clock.outFreq, value: 1 MHz}
 settings:
 - {id: MRCC.OSTIMERCLKSEL.sel, value: VBAT.CLK16K_1}
 - {id: SYSCON.AHBCLKDIV.scale, value: '2', locked: true}
@@ -190,6 +199,11 @@ void BOARD_BootClockFRO24M(void)
         (void)SPC_SetSRAMOperateVoltage(SPC0, &sramOption);
     }
 
+
+    /*!< Set up system dividers */
+    CLOCK_SetClockDiv(kCLOCK_DivAHBCLK, 2U);               /* !< Set AHBCLKDIV divider to value 2 */
+    CLOCK_SetClockDiv(kCLOCK_DivFRO_HF_DIV, 1U);           /* !< Set FROHFDIV divider to value 1 */
+
     CLOCK_SetupFROHFClocking(48000000U);               /*!< Enable FRO HF(48MHz) output */
 
     CLOCK_SetupFRO12MClocking();                /*!< Setup FRO12M clock */
@@ -211,16 +225,27 @@ void BOARD_BootClockFRO24M(void)
     }
 
     /*!< Set up clock selectors - Attach clocks to the peripheries */
+    CLOCK_AttachClk(kCPU_CLK_to_TRACE);                    /* !< Switch TRACE to CPU_CLK */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPSPI0);                /* !< Switch LPSPI0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPSPI1);                /* !< Switch LPSPI1 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPI2C0);                /* !< Switch LPI2C0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPUART0);               /* !< Switch LPUART0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPUART1);               /* !< Switch LPUART1 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPUART2);               /* !< Switch LPUART2 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPTMR0);                /* !< Switch LPTMR0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_I3C0FCLK);              /* !< Switch I3C0FCLK to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_CMP0);                  /* !< Switch CMP0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_CMP1);                  /* !< Switch CMP1 to FRO_HF_DIV */
 
     /* Configure FREQME clock */
     CLOCK_EnableClock(kCLOCK_InputMux);
-    RESET_PeripheralReset(kINPUTMUX0_RST_SHIFT_RSTn);
+    RESET_ReleasePeripheralReset(kINPUTMUX0_RST_SHIFT_RSTn);
     INPUTMUX0->FREQMEAS_REF = INPUTMUX_FREQMEAS_REF_INP(2);
     INPUTMUX0->FREQMEAS_TAR = INPUTMUX_FREQMEAS_TAR_INP(2);
 
     /*!< Set up dividers */
-    CLOCK_SetClockDiv(kCLOCK_DivAHBCLK, 2U);               /* !< Set AHBCLKDIV divider to value 2 */
-    CLOCK_SetClockDiv(kCLOCK_DivFRO_HF_DIV, 1U);           /* !< Set FROHFDIV divider to value 1 */
+    CLOCK_SetClockDiv(kCLOCK_DivTRACE, 1U);                /* !< Set TRACECLKDIV divider to value 1 */
+    CLOCK_SetClockDiv(kCLOCK_DivWWDT0, 1U);                /* !< Set WWDT0CLKDIV divider to value 1 */
 
     /* Set SystemCoreClock variable */
     SystemCoreClock = BOARD_BOOTCLOCKFRO24M_CORE_CLOCK;
@@ -244,7 +269,9 @@ outputs:
 - {id: MAIN_clock.outFreq, value: 48 MHz}
 - {id: Slow_clock.outFreq, value: 12 MHz}
 - {id: System_clock.outFreq, value: 48 MHz}
+- {id: TRACE_clock.outFreq, value: 48 MHz}
 - {id: UTICK_clock.outFreq, value: 1 MHz}
+- {id: WWDT0_clock.outFreq, value: 1 MHz}
 settings:
 - {id: MRCC.OSTIMERCLKSEL.sel, value: VBAT.CLK16K_1}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
@@ -279,6 +306,11 @@ void BOARD_BootClockFRO48M(void)
         (void)SPC_SetSRAMOperateVoltage(SPC0, &sramOption);
     }
 
+
+    /*!< Set up system dividers */
+    CLOCK_SetClockDiv(kCLOCK_DivAHBCLK, 1U);               /* !< Set AHBCLKDIV divider to value 1 */
+    CLOCK_SetClockDiv(kCLOCK_DivFRO_HF_DIV, 1U);           /* !< Set FROHFDIV divider to value 1 */
+
     CLOCK_SetupFROHFClocking(48000000U);               /*!< Enable FRO HF(48MHz) output */
 
     CLOCK_SetupFRO12MClocking();                /*!< Setup FRO12M clock */
@@ -300,16 +332,27 @@ void BOARD_BootClockFRO48M(void)
     }
 
     /*!< Set up clock selectors - Attach clocks to the peripheries */
+    CLOCK_AttachClk(kCPU_CLK_to_TRACE);                    /* !< Switch TRACE to CPU_CLK */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPSPI0);                /* !< Switch LPSPI0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPSPI1);                /* !< Switch LPSPI1 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPI2C0);                /* !< Switch LPI2C0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPUART0);               /* !< Switch LPUART0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPUART1);               /* !< Switch LPUART1 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPUART2);               /* !< Switch LPUART2 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPTMR0);                /* !< Switch LPTMR0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_I3C0FCLK);              /* !< Switch I3C0FCLK to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_CMP0);                  /* !< Switch CMP0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_CMP1);                  /* !< Switch CMP1 to FRO_HF_DIV */
 
     /* Configure FREQME clock */
     CLOCK_EnableClock(kCLOCK_InputMux);
-    RESET_PeripheralReset(kINPUTMUX0_RST_SHIFT_RSTn);
+    RESET_ReleasePeripheralReset(kINPUTMUX0_RST_SHIFT_RSTn);
     INPUTMUX0->FREQMEAS_REF = INPUTMUX_FREQMEAS_REF_INP(2);
     INPUTMUX0->FREQMEAS_TAR = INPUTMUX_FREQMEAS_TAR_INP(2);
 
     /*!< Set up dividers */
-    CLOCK_SetClockDiv(kCLOCK_DivAHBCLK, 1U);               /* !< Set AHBCLKDIV divider to value 1 */
-    CLOCK_SetClockDiv(kCLOCK_DivFRO_HF_DIV, 1U);           /* !< Set FROHFDIV divider to value 1 */
+    CLOCK_SetClockDiv(kCLOCK_DivTRACE, 1U);                /* !< Set TRACECLKDIV divider to value 1 */
+    CLOCK_SetClockDiv(kCLOCK_DivWWDT0, 1U);                /* !< Set WWDT0CLKDIV divider to value 1 */
 
     /* Set SystemCoreClock variable */
     SystemCoreClock = BOARD_BOOTCLOCKFRO48M_CORE_CLOCK;
@@ -333,7 +376,9 @@ outputs:
 - {id: MAIN_clock.outFreq, value: 64 MHz}
 - {id: Slow_clock.outFreq, value: 16 MHz}
 - {id: System_clock.outFreq, value: 64 MHz}
+- {id: TRACE_clock.outFreq, value: 64 MHz}
 - {id: UTICK_clock.outFreq, value: 1 MHz}
+- {id: WWDT0_clock.outFreq, value: 1 MHz}
 settings:
 - {id: VDD_CORE, value: voltage_1v1}
 - {id: MRCC.FROHFDIV.scale, value: '1', locked: true}
@@ -373,6 +418,11 @@ void BOARD_BootClockFRO64M(void)
         (void)SPC_SetSRAMOperateVoltage(SPC0, &sramOption);
     }
 
+
+    /*!< Set up system dividers */
+    CLOCK_SetClockDiv(kCLOCK_DivAHBCLK, 1U);               /* !< Set AHBCLKDIV divider to value 1 */
+    CLOCK_SetClockDiv(kCLOCK_DivFRO_HF_DIV, 1U);           /* !< Set FROHFDIV divider to value 1 */
+
     CLOCK_SetupFROHFClocking(64000000U);               /*!< Enable FRO HF(64MHz) output */
 
     CLOCK_SetupFRO12MClocking();                /*!< Setup FRO12M clock */
@@ -394,16 +444,27 @@ void BOARD_BootClockFRO64M(void)
     }
 
     /*!< Set up clock selectors - Attach clocks to the peripheries */
+    CLOCK_AttachClk(kCPU_CLK_to_TRACE);                    /* !< Switch TRACE to CPU_CLK */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPSPI0);                /* !< Switch LPSPI0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPSPI1);                /* !< Switch LPSPI1 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPI2C0);                /* !< Switch LPI2C0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPUART0);               /* !< Switch LPUART0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPUART1);               /* !< Switch LPUART1 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPUART2);               /* !< Switch LPUART2 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPTMR0);                /* !< Switch LPTMR0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_I3C0FCLK);              /* !< Switch I3C0FCLK to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_CMP0);                  /* !< Switch CMP0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_CMP1);                  /* !< Switch CMP1 to FRO_HF_DIV */
 
     /* Configure FREQME clock */
     CLOCK_EnableClock(kCLOCK_InputMux);
-    RESET_PeripheralReset(kINPUTMUX0_RST_SHIFT_RSTn);
+    RESET_ReleasePeripheralReset(kINPUTMUX0_RST_SHIFT_RSTn);
     INPUTMUX0->FREQMEAS_REF = INPUTMUX_FREQMEAS_REF_INP(2);
     INPUTMUX0->FREQMEAS_TAR = INPUTMUX_FREQMEAS_TAR_INP(2);
 
     /*!< Set up dividers */
-    CLOCK_SetClockDiv(kCLOCK_DivAHBCLK, 1U);               /* !< Set AHBCLKDIV divider to value 1 */
-    CLOCK_SetClockDiv(kCLOCK_DivFRO_HF_DIV, 1U);           /* !< Set FROHFDIV divider to value 1 */
+    CLOCK_SetClockDiv(kCLOCK_DivTRACE, 1U);                /* !< Set TRACECLKDIV divider to value 1 */
+    CLOCK_SetClockDiv(kCLOCK_DivWWDT0, 1U);                /* !< Set WWDT0CLKDIV divider to value 1 */
 
     /* Set SystemCoreClock variable */
     SystemCoreClock = BOARD_BOOTCLOCKFRO64M_CORE_CLOCK;
@@ -428,7 +489,9 @@ outputs:
 - {id: MAIN_clock.outFreq, value: 96 MHz}
 - {id: Slow_clock.outFreq, value: 24 MHz}
 - {id: System_clock.outFreq, value: 96 MHz}
+- {id: TRACE_clock.outFreq, value: 96 MHz}
 - {id: UTICK_clock.outFreq, value: 1 MHz}
+- {id: WWDT0_clock.outFreq, value: 1 MHz}
 settings:
 - {id: VDD_CORE, value: voltage_1v1}
 - {id: CLKOUTDIV_HALT, value: Enable}
@@ -469,6 +532,11 @@ void BOARD_BootClockFRO96M(void)
         (void)SPC_SetSRAMOperateVoltage(SPC0, &sramOption);
     }
 
+
+    /*!< Set up system dividers */
+    CLOCK_SetClockDiv(kCLOCK_DivAHBCLK, 1U);               /* !< Set AHBCLKDIV divider to value 1 */
+    CLOCK_SetClockDiv(kCLOCK_DivFRO_HF_DIV, 1U);           /* !< Set FROHFDIV divider to value 1 */
+
     CLOCK_SetupFROHFClocking(96000000U);               /*!< Enable FRO HF(96MHz) output */
 
     CLOCK_SetupFRO12MClocking();                /*!< Setup FRO12M clock */
@@ -490,16 +558,27 @@ void BOARD_BootClockFRO96M(void)
     }
 
     /*!< Set up clock selectors - Attach clocks to the peripheries */
+    CLOCK_AttachClk(kCPU_CLK_to_TRACE);                    /* !< Switch TRACE to CPU_CLK */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPSPI0);                /* !< Switch LPSPI0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPSPI1);                /* !< Switch LPSPI1 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPI2C0);                /* !< Switch LPI2C0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPUART0);               /* !< Switch LPUART0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPUART1);               /* !< Switch LPUART1 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPUART2);               /* !< Switch LPUART2 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_LPTMR0);                /* !< Switch LPTMR0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_I3C0FCLK);              /* !< Switch I3C0FCLK to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_CMP0);                  /* !< Switch CMP0 to FRO_HF_DIV */
+    CLOCK_AttachClk(kFRO_HF_DIV_to_CMP1);                  /* !< Switch CMP1 to FRO_HF_DIV */
 
     /* Configure FREQME clock */
     CLOCK_EnableClock(kCLOCK_InputMux);
-    RESET_PeripheralReset(kINPUTMUX0_RST_SHIFT_RSTn);
+    RESET_ReleasePeripheralReset(kINPUTMUX0_RST_SHIFT_RSTn);
     INPUTMUX0->FREQMEAS_REF = INPUTMUX_FREQMEAS_REF_INP(2);
     INPUTMUX0->FREQMEAS_TAR = INPUTMUX_FREQMEAS_TAR_INP(2);
 
     /*!< Set up dividers */
-    CLOCK_SetClockDiv(kCLOCK_DivAHBCLK, 1U);               /* !< Set AHBCLKDIV divider to value 1 */
-    CLOCK_SetClockDiv(kCLOCK_DivFRO_HF_DIV, 1U);           /* !< Set FROHFDIV divider to value 1 */
+    CLOCK_SetClockDiv(kCLOCK_DivTRACE, 1U);                /* !< Set TRACECLKDIV divider to value 1 */
+    CLOCK_SetClockDiv(kCLOCK_DivWWDT0, 1U);                /* !< Set WWDT0CLKDIV divider to value 1 */
 
     /* Set SystemCoreClock variable */
     SystemCoreClock = BOARD_BOOTCLOCKFRO96M_CORE_CLOCK;

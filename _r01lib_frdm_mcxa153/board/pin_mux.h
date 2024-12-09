@@ -26,10 +26,15 @@ extern "C" {
 void BOARD_InitBootPins(void);
 
 #define PCR_IBE_ibe1 0x01u          /*!<@brief Input Buffer Enable: Enables */
+#define PORT1_PCR0_MUX_mux00 0x00u  /*!<@brief Pin Multiplex Control: Alternative 0 (GPIO) */
+#define PORT1_PCR1_MUX_mux00 0x00u  /*!<@brief Pin Multiplex Control: Alternative 0 (GPIO) */
+#define PORT1_PCR3_MUX_mux00 0x00u  /*!<@brief Pin Multiplex Control: Alternative 0 (GPIO) */
 #define PORT2_PCR0_MUX_mux00 0x00u  /*!<@brief Pin Multiplex Control: Alternative 0 (GPIO) */
 #define PORT2_PCR12_MUX_mux00 0x00u /*!<@brief Pin Multiplex Control: Alternative 0 (GPIO) */
 #define PORT2_PCR13_MUX_mux00 0x00u /*!<@brief Pin Multiplex Control: Alternative 0 (GPIO) */
 #define PORT2_PCR16_MUX_mux00 0x00u /*!<@brief Pin Multiplex Control: Alternative 0 (GPIO) */
+#define PORT2_PCR1_MUX_mux00 0x00u  /*!<@brief Pin Multiplex Control: Alternative 0 (GPIO) */
+#define PORT2_PCR2_MUX_mux00 0x00u  /*!<@brief Pin Multiplex Control: Alternative 0 (GPIO) */
 #define PORT2_PCR4_MUX_mux00 0x00u  /*!<@brief Pin Multiplex Control: Alternative 0 (GPIO) */
 #define PORT2_PCR5_MUX_mux00 0x00u  /*!<@brief Pin Multiplex Control: Alternative 0 (GPIO) */
 #define PORT2_PCR6_MUX_mux00 0x00u  /*!<@brief Pin Multiplex Control: Alternative 0 (GPIO) */
@@ -347,6 +352,20 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_ARD_D19_PIN 9U                   /*!<@brief PORT pin number */
 #define BOARD_INITPINS_ARD_D19_PIN_MASK (1U << 9U)      /*!<@brief PORT pin mask */
                                                         /* @} */
+
+/*! @name PORT2_2 (number 16), ADC0
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_ADC0_GPIO GPIO2               /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_ADC0_GPIO_PIN 2U              /*!<@brief GPIO pin number */
+#define BOARD_INITPINS_ADC0_GPIO_PIN_MASK (1U << 2U) /*!<@brief GPIO pin mask */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_INITPINS_ADC0_PORT PORT2               /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_ADC0_PIN 2U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_ADC0_PIN_MASK (1U << 2U)      /*!<@brief PORT pin mask */
+                                                     /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

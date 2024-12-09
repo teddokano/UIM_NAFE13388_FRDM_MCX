@@ -7,11 +7,11 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v15.0
+product: Pins v16.0
 processor: MCXA153
 package_id: MCXA153VLH
 mcu_data: ksdk2_0
-processor_version: 15.0.0
+processor_version: 16.3.0
 pin_labels:
 - {pin_num: '16', pin_signal: P2_2/TRIG_IN6/LPUART0_RTS_B/LPUART2_TXD/CT_INP12/CT2_MAT2/ADC0_A4/CMP0_IN0, label: ADC0, identifier: ADC0}
 - {pin_num: '5', pin_signal: P1_11/WUU0_IN11/TRIG_OUT2/LPUART1_CTS_B/LPI2C0_SCLS/CT2_MAT1/I3C0_PUR/ADC0_A9, label: I3C0_PUR}
@@ -104,6 +104,19 @@ BOARD_InitPins:
   - {pin_num: '54', peripheral: I3C0, signal: SDA, pin_signal: P0_16/WUU0_IN2/LPI2C0_SDA/LPSPI0_PCS2/CT0_MAT0/UTICK_CAP2/I3C0_SDA}
   - {pin_num: '55', peripheral: I3C0, signal: SCL, pin_signal: P0_17/LPI2C0_SCL/LPSPI0_PCS3/CT0_MAT1/UTICK_CAP3/I3C0_SCL}
   - {pin_num: '46', peripheral: GPIO3, signal: 'GPIO, 0', pin_signal: P3_0/WUU0_IN22/TRIG_IN0/CT_INP16/PWM0_A0, identifier: ''}
+  - {pin_num: '16', peripheral: GPIO2, signal: 'GPIO, 2', pin_signal: P2_2/TRIG_IN6/LPUART0_RTS_B/LPUART2_TXD/CT_INP12/CT2_MAT2/ADC0_A4/CMP0_IN0}
+  - {pin_num: '15', peripheral: GPIO2, signal: 'GPIO, 1', pin_signal: P2_1/TRIG_IN7/LPUART0_TXD/CT_INP17/CT2_MAT1/ADC0_A1}
+  - {pin_num: '17', peripheral: GPIO2, signal: 'GPIO, 3', pin_signal: P2_3/WUU0_IN19/TRIG_IN7/LPUART0_CTS_B/LPUART2_RXD/CT_INP13/CT2_MAT3/ADC0_A2/CMP1_IN0}
+  - {pin_num: '17', peripheral: WUU0, signal: 'P, 19', pin_signal: P2_3/WUU0_IN19/TRIG_IN7/LPUART0_CTS_B/LPUART2_RXD/CT_INP13/CT2_MAT3/ADC0_A2/CMP1_IN0}
+  - {pin_num: '64', peripheral: GPIO1, signal: 'GPIO, 6', pin_signal: P1_6/TRIG_IN2/LPSPI0_PCS1/LPUART2_RTS_B/CT_INP6/ADC0_A22}
+  - {pin_num: '44', peripheral: GPIO3, signal: 'GPIO, 6', pin_signal: P3_6/CLKOUT/LPSPI1_PCS3/PWM0_A0/FREQME_CLK_OUT1}
+  - {pin_num: '59', peripheral: GPIO1, signal: 'GPIO, 3', pin_signal: P1_3/WUU0_IN7/TRIG_OUT1/LPSPI0_PCS0/LPI2C0_SCLS/CT1_MAT1/CT_INP1/ADC0_A19/CMP0_IN1}
+  - {pin_num: '59', peripheral: WUU0, signal: 'P, 7', pin_signal: P1_3/WUU0_IN7/TRIG_OUT1/LPSPI0_PCS0/LPI2C0_SCLS/CT1_MAT1/CT_INP1/ADC0_A19/CMP0_IN1}
+  - {pin_num: '57', peripheral: GPIO1, signal: 'GPIO, 1', pin_signal: P1_1/TRIG_IN1/LPSPI0_SCK/LPI2C0_SCL/CT_INP5/CT0_MAT3/ADC0_A17/CMP1_IN3}
+  - {pin_num: '58', peripheral: GPIO1, signal: 'GPIO, 2', pin_signal: P1_2/TRIG_OUT0/LPSPI0_SDI/LPI2C0_SDAS/CT1_MAT0/CT_INP0/ADC0_A18}
+  - {pin_num: '56', peripheral: GPIO1, signal: 'GPIO, 0', pin_signal: P1_0/WUU0_IN6/LPTMR0_ALT3/TRIG_IN0/LPSPI0_SDO/LPI2C0_SDA/CT_INP4/CT0_MAT2/ADC0_A16/CMP0_IN3}
+  - {pin_num: '56', peripheral: LPTMR0, signal: 'ALT, 3', pin_signal: P1_0/WUU0_IN6/LPTMR0_ALT3/TRIG_IN0/LPSPI0_SDO/LPI2C0_SDA/CT_INP4/CT0_MAT2/ADC0_A16/CMP0_IN3}
+  - {pin_num: '56', peripheral: WUU0, signal: 'P, 6', pin_signal: P1_0/WUU0_IN6/LPTMR0_ALT3/TRIG_IN0/LPSPI0_SDO/LPI2C0_SDA/CT_INP4/CT0_MAT2/ADC0_A16/CMP0_IN3}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -170,52 +183,52 @@ void BOARD_InitPins(void)
                       | PORT_PCR_IBE(PCR_IBE_ibe1));
 
     const port_pin_config_t port0_2_pin51_config = {/* Internal pull-up resistor is enabled */
-                                                    kPORT_PullUp,
+                                                    .pullSelect = kPORT_PullUp,
                                                     /* Low internal pull resistor value is selected. */
-                                                    kPORT_LowPullResistor,
+                                                    .pullValueSelect = kPORT_LowPullResistor,
                                                     /* Fast slew rate is configured */
-                                                    kPORT_FastSlewRate,
+                                                    .slewRate = kPORT_FastSlewRate,
                                                     /* Passive input filter is disabled */
-                                                    kPORT_PassiveFilterDisable,
+                                                    .passiveFilterEnable = kPORT_PassiveFilterDisable,
                                                     /* Open drain output is disabled */
-                                                    kPORT_OpenDrainDisable,
+                                                    .openDrainEnable = kPORT_OpenDrainDisable,
                                                     /* Low drive strength is configured */
-                                                    kPORT_LowDriveStrength,
+                                                    .driveStrength = kPORT_LowDriveStrength,
                                                     /* Normal drive strength is configured */
-                                                    kPORT_NormalDriveStrength,
+                                                    .driveStrength1 = kPORT_NormalDriveStrength,
                                                     /* Pin is configured as LPUART0_RXD */
-                                                    kPORT_MuxAlt2,
+                                                    .mux = kPORT_MuxAlt2,
                                                     /* Digital input enabled */
-                                                    kPORT_InputBufferEnable,
+                                                    .inputBuffer = kPORT_InputBufferEnable,
                                                     /* Digital input is not inverted */
-                                                    kPORT_InputNormal,
+                                                    .invertInput = kPORT_InputNormal,
                                                     /* Pin Control Register fields [15:0] are not locked */
-                                                    kPORT_UnlockRegister};
+                                                    .lockRegister = kPORT_UnlockRegister};
     /* PORT0_2 (pin 51) is configured as LPUART0_RXD */
     PORT_SetPinConfig(PORT0, 2U, &port0_2_pin51_config);
 
     const port_pin_config_t port0_3_pin52_config = {/* Internal pull-up resistor is enabled */
-                                                    kPORT_PullUp,
+                                                    .pullSelect = kPORT_PullUp,
                                                     /* Low internal pull resistor value is selected. */
-                                                    kPORT_LowPullResistor,
+                                                    .pullValueSelect = kPORT_LowPullResistor,
                                                     /* Fast slew rate is configured */
-                                                    kPORT_FastSlewRate,
+                                                    .slewRate = kPORT_FastSlewRate,
                                                     /* Passive input filter is disabled */
-                                                    kPORT_PassiveFilterDisable,
+                                                    .passiveFilterEnable = kPORT_PassiveFilterDisable,
                                                     /* Open drain output is disabled */
-                                                    kPORT_OpenDrainDisable,
+                                                    .openDrainEnable = kPORT_OpenDrainDisable,
                                                     /* Low drive strength is configured */
-                                                    kPORT_LowDriveStrength,
+                                                    .driveStrength = kPORT_LowDriveStrength,
                                                     /* Normal drive strength is configured */
-                                                    kPORT_NormalDriveStrength,
+                                                    .driveStrength1 = kPORT_NormalDriveStrength,
                                                     /* Pin is configured as LPUART0_TXD */
-                                                    kPORT_MuxAlt2,
+                                                    .mux = kPORT_MuxAlt2,
                                                     /* Digital input enabled */
-                                                    kPORT_InputBufferEnable,
+                                                    .inputBuffer = kPORT_InputBufferEnable,
                                                     /* Digital input is not inverted */
-                                                    kPORT_InputNormal,
+                                                    .invertInput = kPORT_InputNormal,
                                                     /* Pin Control Register fields [15:0] are not locked */
-                                                    kPORT_UnlockRegister};
+                                                    .lockRegister = kPORT_UnlockRegister};
     /* PORT0_3 (pin 52) is configured as LPUART0_TXD */
     PORT_SetPinConfig(PORT0, 3U, &port0_3_pin52_config);
 
@@ -225,6 +238,26 @@ void BOARD_InitPins(void)
     PORT0->PCR[6] = ((PORT0->PCR[6] &
                       /* Mask bits to zero which are setting */
                       (~(PORT_PCR_IBE_MASK)))
+
+                     /* Input Buffer Enable: Enables. */
+                     | PORT_PCR_IBE(PCR_IBE_ibe1));
+
+    PORT1->PCR[0] = ((PORT1->PCR[0] &
+                      /* Mask bits to zero which are setting */
+                      (~(PORT_PCR_MUX_MASK | PORT_PCR_IBE_MASK)))
+
+                     /* Pin Multiplex Control: PORT1_0 (pin 56) is configured as P1_0, LPTMR0_ALT3, WUU0_IN6. */
+                     | PORT_PCR_MUX(PORT1_PCR0_MUX_mux00)
+
+                     /* Input Buffer Enable: Enables. */
+                     | PORT_PCR_IBE(PCR_IBE_ibe1));
+
+    PORT1->PCR[1] = ((PORT1->PCR[1] &
+                      /* Mask bits to zero which are setting */
+                      (~(PORT_PCR_MUX_MASK | PORT_PCR_IBE_MASK)))
+
+                     /* Pin Multiplex Control: PORT1_1 (pin 57) is configured as P1_1. */
+                     | PORT_PCR_MUX(PORT1_PCR1_MUX_mux00)
 
                      /* Input Buffer Enable: Enables. */
                      | PORT_PCR_IBE(PCR_IBE_ibe1));
@@ -240,27 +273,27 @@ void BOARD_InitPins(void)
                       | PORT_PCR_IBE(PCR_IBE_ibe1));
 
     const port_pin_config_t port1_11_pin5_config = {/* Internal pull-up/down resistor is disabled */
-                                                    kPORT_PullDisable,
+                                                    .pullSelect = kPORT_PullDisable,
                                                     /* Low internal pull resistor value is selected. */
-                                                    kPORT_LowPullResistor,
+                                                    .pullValueSelect = kPORT_LowPullResistor,
                                                     /* Fast slew rate is configured */
-                                                    kPORT_FastSlewRate,
+                                                    .slewRate = kPORT_FastSlewRate,
                                                     /* Passive input filter is disabled */
-                                                    kPORT_PassiveFilterDisable,
+                                                    .passiveFilterEnable = kPORT_PassiveFilterDisable,
                                                     /* Open drain output is disabled */
-                                                    kPORT_OpenDrainDisable,
+                                                    .openDrainEnable = kPORT_OpenDrainDisable,
                                                     /* Low drive strength is configured */
-                                                    kPORT_LowDriveStrength,
+                                                    .driveStrength = kPORT_LowDriveStrength,
                                                     /* Normal drive strength is configured */
-                                                    kPORT_NormalDriveStrength,
+                                                    .driveStrength1 = kPORT_NormalDriveStrength,
                                                     /* Pin is configured as I3C0_PUR */
-                                                    kPORT_MuxAlt10,
+                                                    .mux = kPORT_MuxAlt10,
                                                     /* Digital input enabled */
-                                                    kPORT_InputBufferEnable,
+                                                    .inputBuffer = kPORT_InputBufferEnable,
                                                     /* Digital input is not inverted */
-                                                    kPORT_InputNormal,
+                                                    .invertInput = kPORT_InputNormal,
                                                     /* Pin Control Register fields [15:0] are not locked */
-                                                    kPORT_UnlockRegister};
+                                                    .lockRegister = kPORT_UnlockRegister};
     /* PORT1_11 (pin 5) is configured as I3C0_PUR */
     PORT_SetPinConfig(PORT1, 11U, &port1_11_pin5_config);
 
@@ -284,6 +317,26 @@ void BOARD_InitPins(void)
                       /* Input Buffer Enable: Enables. */
                       | PORT_PCR_IBE(PCR_IBE_ibe1));
 
+    /* PORT1_2 (pin 58) is configured as P1_2 */
+    PORT_SetPinMux(PORT1, 2U, kPORT_MuxAlt0);
+
+    PORT1->PCR[2] = ((PORT1->PCR[2] &
+                      /* Mask bits to zero which are setting */
+                      (~(PORT_PCR_IBE_MASK)))
+
+                     /* Input Buffer Enable: Enables. */
+                     | PORT_PCR_IBE(PCR_IBE_ibe1));
+
+    PORT1->PCR[3] = ((PORT1->PCR[3] &
+                      /* Mask bits to zero which are setting */
+                      (~(PORT_PCR_MUX_MASK | PORT_PCR_IBE_MASK)))
+
+                     /* Pin Multiplex Control: PORT1_3 (pin 59) is configured as P1_3, WUU0_IN7. */
+                     | PORT_PCR_MUX(PORT1_PCR3_MUX_mux00)
+
+                     /* Input Buffer Enable: Enables. */
+                     | PORT_PCR_IBE(PCR_IBE_ibe1));
+
     /* PORT1_4 (pin 62) is configured as P1_4 */
     PORT_SetPinMux(BOARD_INITPINS_ARD_D0_PORT, BOARD_INITPINS_ARD_D0_PIN, kPORT_MuxAlt0);
 
@@ -298,6 +351,16 @@ void BOARD_InitPins(void)
     PORT_SetPinMux(BOARD_INITPINS_ARD_D1_PORT, BOARD_INITPINS_ARD_D1_PIN, kPORT_MuxAlt0);
 
     PORT1->PCR[5] = ((PORT1->PCR[5] &
+                      /* Mask bits to zero which are setting */
+                      (~(PORT_PCR_IBE_MASK)))
+
+                     /* Input Buffer Enable: Enables. */
+                     | PORT_PCR_IBE(PCR_IBE_ibe1));
+
+    /* PORT1_6 (pin 64) is configured as P1_6 */
+    PORT_SetPinMux(PORT1, 6U, kPORT_MuxAlt0);
+
+    PORT1->PCR[6] = ((PORT1->PCR[6] &
                       /* Mask bits to zero which are setting */
                       (~(PORT_PCR_IBE_MASK)))
 
@@ -344,6 +407,16 @@ void BOARD_InitPins(void)
                      /* Input Buffer Enable: Enables. */
                      | PORT_PCR_IBE(PCR_IBE_ibe1));
 
+    PORT2->PCR[1] = ((PORT2->PCR[1] &
+                      /* Mask bits to zero which are setting */
+                      (~(PORT_PCR_MUX_MASK | PORT_PCR_IBE_MASK)))
+
+                     /* Pin Multiplex Control: PORT2_1 (pin 15) is configured as P2_1. */
+                     | PORT_PCR_MUX(PORT2_PCR1_MUX_mux00)
+
+                     /* Input Buffer Enable: Enables. */
+                     | PORT_PCR_IBE(PCR_IBE_ibe1));
+
     PORT2->PCR[12] = ((PORT2->PCR[12] &
                        /* Mask bits to zero which are setting */
                        (~(PORT_PCR_MUX_MASK | PORT_PCR_IBE_MASK)))
@@ -373,6 +446,26 @@ void BOARD_InitPins(void)
 
                       /* Input Buffer Enable: Enables. */
                       | PORT_PCR_IBE(PCR_IBE_ibe1));
+
+    PORT2->PCR[2] = ((PORT2->PCR[2] &
+                      /* Mask bits to zero which are setting */
+                      (~(PORT_PCR_MUX_MASK | PORT_PCR_IBE_MASK)))
+
+                     /* Pin Multiplex Control: PORT2_2 (pin 16) is configured as P2_2. */
+                     | PORT_PCR_MUX(PORT2_PCR2_MUX_mux00)
+
+                     /* Input Buffer Enable: Enables. */
+                     | PORT_PCR_IBE(PCR_IBE_ibe1));
+
+    /* PORT2_3 (pin 17) is configured as P2_3, WUU0_IN19 */
+    PORT_SetPinMux(PORT2, 3U, kPORT_MuxAlt0);
+
+    PORT2->PCR[3] = ((PORT2->PCR[3] &
+                      /* Mask bits to zero which are setting */
+                      (~(PORT_PCR_IBE_MASK)))
+
+                     /* Input Buffer Enable: Enables. */
+                     | PORT_PCR_IBE(PCR_IBE_ibe1));
 
     PORT2->PCR[4] = ((PORT2->PCR[4] &
                       /* Mask bits to zero which are setting */
@@ -523,6 +616,16 @@ void BOARD_InitPins(void)
 
                       /* Input Buffer Enable: Enables. */
                       | PORT_PCR_IBE(PCR_IBE_ibe1));
+
+    /* PORT3_6 (pin 44) is configured as P3_6 */
+    PORT_SetPinMux(PORT3, 6U, kPORT_MuxAlt0);
+
+    PORT3->PCR[6] = ((PORT3->PCR[6] &
+                      /* Mask bits to zero which are setting */
+                      (~(PORT_PCR_IBE_MASK)))
+
+                     /* Input Buffer Enable: Enables. */
+                     | PORT_PCR_IBE(PCR_IBE_ibe1));
 
     PORT3->PCR[7] = ((PORT3->PCR[7] &
                       /* Mask bits to zero which are setting */

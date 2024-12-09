@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chips chipVendor="NXP"
+       family="MCXA1XX"
+       vendorURL="http://www.nxp.com"
+       chipURL="">
+   <chip name="MCXA156"
+         displayName="MCXA156"
+         xml_file="MCXA156_internal.xml"
+         chipURL=""/>
+</chips>

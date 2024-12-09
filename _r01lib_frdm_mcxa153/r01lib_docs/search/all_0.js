@@ -18,6 +18,7 @@ var searchData=
   ['_5freg_5fw_15',['_reg_w',['../class_p_c_f85063__base.html#a906bbb548df5e8aa188de0262340d644',1,'PCF85063_base::_reg_w(uint8_t reg, uint8_t *vp, int len)=0'],['../class_p_c_f85063__base.html#a6649795f67cdbe4f9f7555c92e38517c',1,'PCF85063_base::_reg_w(uint8_t reg, uint8_t val)=0'],['../class_p_c_f85063_a.html#ac2d619e85737bd46fd323bba893ab352',1,'PCF85063A::_reg_w(uint8_t reg, uint8_t *vp, int len)'],['../class_p_c_f85063_a.html#abb54681531e0c011ceeba97e238428e6',1,'PCF85063A::_reg_w(uint8_t reg, uint8_t val)']]],
   ['_5fscl_16',['_scl',['../class_i2_c.html#a44f399fc7fa62a3d606e584371f29b33',1,'I2C']]],
   ['_5fsda_17',['_sda',['../class_i2_c.html#af8f7be292c9db76518888e35bc5e2335',1,'I2C']]],
-  ['_5fvalue_18',['_value',['../class_digital_in_out.html#a8c80e99be8680936898ebe12f706e8aa',1,'DigitalInOut']]],
-  ['_5fwidth_19',['_width',['../class_bus_in_out.html#aa84db6a2b3cd7e79614adae8353b5306',1,'BusInOut']]]
+  ['_5fspi_18',['_spi',['../class_s_p_i__for___a_f_e.html#ac158962137993fa62b11b4dc152ce7a7',1,'SPI_for_AFE']]],
+  ['_5fvalue_19',['_value',['../class_digital_in_out.html#a8c80e99be8680936898ebe12f706e8aa',1,'DigitalInOut']]],
+  ['_5fwidth_20',['_width',['../class_bus_in_out.html#aa84db6a2b3cd7e79614adae8353b5306',1,'BusInOut']]]
 ];

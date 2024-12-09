@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['businout_2ecpp_0',['BusInOut.cpp',['../_bus_in_out_8cpp.html',1,'']]],
-  ['businout_2eh_1',['BusInOut.h',['../_bus_in_out_8h.html',1,'']]]
+  ['afe_5fnxp_2ecpp_0',['AFE_NXP.cpp',['../_a_f_e___n_x_p_8cpp.html',1,'']]],
+  ['afe_5fnxp_2eh_1',['AFE_NXP.h',['../_a_f_e___n_x_p_8h.html',1,'']]]
 ];

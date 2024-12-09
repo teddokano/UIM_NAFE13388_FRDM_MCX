@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['tempsensor_0',['TempSensor',['../class_temp_sensor.html',1,'']]],
-  ['test_5flm75b_1',['test_LM75B',['../classtest___l_m75_b.html',1,'']]],
-  ['ticker_2',['Ticker',['../class_ticker.html',1,'']]]
+  ['serial_5fdevice_0',['Serial_device',['../class_serial__device.html',1,'']]],
+  ['spi_1',['SPI',['../class_s_p_i.html',1,'']]],
+  ['spi_5ffor_5fafe_2',['SPI_for_AFE',['../class_s_p_i__for___a_f_e.html',1,'']]],
+  ['spi_5ffor_5frtc_3',['SPI_for_RTC',['../class_s_p_i__for___r_t_c.html',1,'']]]
 ];
