@@ -1,5 +1,4 @@
-/** LEDDriver operation library for Arduino
- *
+/*
  *  @author Tedd OKANO
  *
  *  Released under the MIT license License
@@ -55,15 +54,14 @@ public:
 
 	/** Set PWM value for a channel
 	 *
-	 * @param reg register number
-	 * @param value	PWM value in float (0.0 ~ 1.0)
+	 * @param ch channel number
+	 * @param value	PWM value in float. Values should be in range from 0.0 to 1.0.
 	 */
 	void pwm( uint8_t ch, float value );
 
 	/** Set PWM value for all channels
 	 *
-	 * @param reg register number
-	 * @param *value pointer to PWM value in float (0.0 ~ 1.0)
+	 * @param *value Pointer to PWM value in float. Values should be in range from 0.0 to 1.0.
 	 */
 	void pwm( float* values );
 
@@ -247,15 +245,14 @@ public:
 
 	/** Set PWM value for a channel
 	 *
-	 * @param reg register number
-	 * @param value	PWM value in float (0.0 ~ 1.0)
+	 * @param ch channel number
+	 * @param value	PWM value in float. Values should be in range from 0.0 to 1.0.
 	 */
 	void pwm( uint8_t ch, float value );
 
 	/** Set PWM value for all channels
 	 *
-	 * @param reg register number
-	 * @param *value pointer to PWM value in float (0.0 ~ 1.0)
+	 * @param *value Pointer to PWM value in float. Values should be in range from 0.0 to 1.0.
 	 */
 	void pwm( float* values );
 
@@ -401,15 +398,14 @@ public:
 
 	/** Set PWM value for a channel
 	 *
-	 * @param reg register number
-	 * @param value	PWM value in float (0.0 ~ 1.0)
+	 * @param ch channel number
+	 * @param value	PWM value in float. Values should be in range from 0.0 to 1.0.
 	 */
 	void pwm( uint8_t ch, float value );
 
 	/** Set PWM value for all channels
 	 *
-	 * @param reg register number
-	 * @param *value pointer to PWM value in float (0.0 ~ 1.0)
+	 * @param *value Pointer to PWM value in float. Values should be in range from 0.0 to 1.0.
 	 */
 	void pwm( float* values );
 
@@ -561,15 +557,14 @@ public:
 
 	/** Set PWM value for a channel
 	 *
-	 * @param reg register number
-	 * @param value	PWM value in float (0.0 ~ 1.0)
+	 * @param ch channel number
+	 * @param value	PWM value in float. Values should be in range from 0.0 to 1.0.
 	 */
 	void pwm( uint8_t ch, float value );
 
 	/** Set PWM value for all channels
 	 *
-	 * @param reg register number
-	 * @param *value pointer to PWM value in float (0.0 ~ 1.0)
+	 * @param *value Pointer to PWM value in float. Values should be in range from 0.0 to 1.0.
 	 */
 	void pwm( float* values );
 

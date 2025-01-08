@@ -1,5 +1,4 @@
-/** I2C device abstracting class
- *
+/*
  *  @author Tedd OKANO
  *
  *  Released under the MIT license License
@@ -27,33 +26,9 @@ void I2C_device::repeated_start_enable( bool en )
 	rs_dis	= !en;
 }
 
-void I2C_device::scan( I2C& target_i2c, uint8_t stop )
+void I2C_device::scan( I2C& target_i2c, uint8_t last )
 {
-	bool  result[ 128 ];
-	uint8_t	dummy	= 0;
-
-	for ( uint8_t i = 0; i < stop; i++ ) {
-		result[i] = !target_i2c.write( i, &dummy, 0 );
-	}
-
-	for ( uint8_t i = stop; i < 128; i++ ) {
-		result[i] = false;
-	}
-
-	PRINTF( "\r\nI2C scan result\r\n   " );
-	for ( uint8_t x = 0; x < 16; x++ )
-		PRINTF( " %02X", x );
-	
-	for ( uint8_t i = 0; i < 128; i++ ) {
-		if ( !( i % 16) )
-			PRINTF( "\r\n%02Xx:", i / 16 );
-
-		if ( result[ i ] )
-			PRINTF( " %02X", i );
-		else
-			PRINTF( " --" );
-	}
-	PRINTF( "\r\n" );			
+	target_i2c.scan( last );
 }
 
 int I2C_device::tx( const uint8_t *data, uint16_t size, bool stop )
@@ -149,6 +124,11 @@ void I2C_device::bit_op16( uint8_t reg, uint16_t mask, uint16_t value )
 	v	|= value;
 
 	write_r16( reg, v );
+}
+
+bool I2C_device::ping( void )
+{
+	return i2c.ping( i2c_addr );
 }
 
 uint8_t I2C_device::address( void )

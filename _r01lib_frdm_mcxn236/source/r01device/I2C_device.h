@@ -1,9 +1,5 @@
-/** I2C device abstracting class
- *
- *	This class provides common methods for all I2C devices
- *
- *  @class   I2C_device
- *  @author  Tedd OKANO
+/*
+ *  @author Tedd OKANO
  *
  *  Released under the MIT license License
  */
@@ -165,6 +161,13 @@ public:
 	void bit_op8(  uint8_t reg,  uint8_t mask,  uint8_t value );
 	void bit_op16( uint8_t reg, uint16_t mask, uint16_t value );
 
+	/** ping
+	 *		check device returns ACK
+	 *
+	 * @return true if ACKs
+	 */
+	bool ping( void );
+	
 	/** ping (class method)
 	 *
 	 * @param target address
@@ -173,8 +176,12 @@ public:
 	static bool ping( uint8_t addr );
 	
 	/** scan (class method)
+	 * 		thsi is a class-method to scan devices
+	 * 		
+	 * @param target_i2c I2C instance
+	 * @param last	the last address to limit scan range
 	 */
-	static void scan( I2C& target_i2c, uint8_t stop = 128 );
+	static void scan( I2C& target_i2c, uint8_t last = 124 );
 
 	/** address
 	 * @return target address in 7bit notation (right justified)

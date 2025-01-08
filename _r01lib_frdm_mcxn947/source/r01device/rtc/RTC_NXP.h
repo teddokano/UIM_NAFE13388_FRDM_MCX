@@ -1,5 +1,4 @@
-/** RTC operation library for Arduino
- *
+/*
  *  @author Tedd OKANO
  *
  *  Released under the MIT license License
@@ -232,6 +231,11 @@ public:
 	enum timestanp_setting {
 		LAST,
 		FIRST,
+	};
+	/** Interrupt output selector */
+	enum int_out_sel {
+		INT_A,
+		INT_B,
 	};
 
 	/** Create a PCF2131 instance connected to I2C with specified address
@@ -761,6 +765,11 @@ public:
 		TSIM_MECHANICAL	= 0x10,
 	};
 
+	/** Interrupt output selector */
+	enum int_out_sel {
+		INT_A,
+		INT_B,
+	};
 	/** Create a PCF85263A instance connected to specified I2C pins with specified address
 	 *
 	 * @param wire TwoWire instance

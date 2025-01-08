@@ -12,6 +12,9 @@ processor: MCXN236
 package_id: MCXN236VDF
 mcu_data: ksdk2_0
 processor_version: 16.3.0
+pin_labels:
+- {pin_num: A1, pin_signal: PIO1_8/WUU0_IN10/LPTMR1_ALT3/TRACE_DATA0/FC4_P0/FC5_P4/CT_INP8/FLEXIO0_D16/EZH_PIO4/I3C1_SDA/ADC1_A8, label: 'P1_8/J9[12]', identifier: DEBUG_UART_RX}
+- {pin_num: B1, pin_signal: PIO1_9/TRACE_DATA1/FC4_P1/FC5_P5/CT_INP9/FLEXIO0_D17/EZH_PIO5/I3C1_SCL/ADC1_A9, label: 'P1_9/J9[11]', identifier: DEBUG_UART_TX}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -104,7 +107,6 @@ BOARD_InitPins:
   - {pin_num: C13, peripheral: WUU0, signal: 'P, 1', pin_signal: PIO0_7/WUU0_IN1/FC0_P3/CT_INP3}
   - {pin_num: D3, peripheral: GPIO1, signal: 'GPIO, 11', pin_signal: PIO1_11/WUU0_IN11/TRACE_DATA3/FC4_P3/CT2_MAT1/FLEXIO0_D19/EZH_PIO7/I3C1_PUR/CAN0_RXD/ADC1_A11}
   - {pin_num: D3, peripheral: WUU0, signal: 'P, 11', pin_signal: PIO1_11/WUU0_IN11/TRACE_DATA3/FC4_P3/CT2_MAT1/FLEXIO0_D19/EZH_PIO7/I3C1_PUR/CAN0_RXD/ADC1_A11}
-  - {pin_num: B1, peripheral: GPIO1, signal: 'GPIO, 9', pin_signal: PIO1_9/TRACE_DATA1/FC4_P1/FC5_P5/CT_INP9/FLEXIO0_D17/EZH_PIO5/I3C1_SCL/ADC1_A9}
   - {pin_num: B3, peripheral: GPIO1, signal: 'GPIO, 5', pin_signal: PIO1_5/FREQME_CLK_IN1/FC3_P5/FC5_P1/CT1_MAT3/FLEXIO0_D13/EZH_PIO1/SAI0_RXD1/ADC0_A21/CMP0_IN3}
   - {pin_num: G5, peripheral: GPIO1, signal: 'GPIO, 19', pin_signal: PIO1_19/WUU0_IN15/FREQME_CLK_IN1/FC5_P3/CT3_MAT1/FLEXIO0_D27/EZH_PIO15/CAN0_RXD/ADC1_A19}
   - {pin_num: G5, peripheral: WUU0, signal: 'P, 15', pin_signal: PIO1_19/WUU0_IN15/FREQME_CLK_IN1/FC5_P3/CT3_MAT1/FLEXIO0_D27/EZH_PIO15/CAN0_RXD/ADC1_A19}
@@ -119,8 +121,6 @@ BOARD_InitPins:
   - {pin_num: H3, peripheral: GPIO2, signal: 'GPIO, 2', pin_signal: PIO2_2/WUU0_IN16/CLKOUT/PWM1_A2/FLEXIO0_D10/EZH_PIO22/SAI0_TXD0}
   - {pin_num: H3, peripheral: WUU0, signal: 'P, 16', pin_signal: PIO2_2/WUU0_IN16/CLKOUT/PWM1_A2/FLEXIO0_D10/EZH_PIO22/SAI0_TXD0}
   - {pin_num: C3, peripheral: GPIO1, signal: 'GPIO, 10', pin_signal: PIO1_10/TRACE_DATA2/FC4_P2/FC5_P6/CT2_MAT0/FLEXIO0_D18/EZH_PIO6/CAN0_TXD/ADC1_A10}
-  - {pin_num: A1, peripheral: GPIO1, signal: 'GPIO, 8', pin_signal: PIO1_8/WUU0_IN10/LPTMR1_ALT3/TRACE_DATA0/FC4_P0/FC5_P4/CT_INP8/FLEXIO0_D16/EZH_PIO4/I3C1_SDA/ADC1_A8}
-  - {pin_num: A1, peripheral: WUU0, signal: 'P, 10', pin_signal: PIO1_8/WUU0_IN10/LPTMR1_ALT3/TRACE_DATA0/FC4_P0/FC5_P4/CT_INP8/FLEXIO0_D16/EZH_PIO4/I3C1_SDA/ADC1_A8}
   - {pin_num: B2, peripheral: GPIO1, signal: 'GPIO, 6', pin_signal: PIO1_6/TRIG_IN2/FC3_P6/FC5_P2/CT_INP6/FLEXIO0_D14/EZH_PIO2/SAI1_RX_BCLK/CAN1_TXD/ADC0_A22}
   - {pin_num: A4, peripheral: GPIO1, signal: 'GPIO, 4', pin_signal: PIO1_4/WUU0_IN8/FREQME_CLK_IN0/FC3_P4/FC5_P0/CT1_MAT2/FLEXIO0_D12/EZH_PIO0/SAI0_TXD1/ADC0_A20/CMP0_IN2}
   - {pin_num: A4, peripheral: WUU0, signal: 'P, 8', pin_signal: PIO1_4/WUU0_IN8/FREQME_CLK_IN0/FC3_P4/FC5_P0/CT1_MAT2/FLEXIO0_D12/EZH_PIO0/SAI0_TXD1/ADC0_A20/CMP0_IN2}
@@ -148,6 +148,9 @@ BOARD_InitPins:
   - {pin_num: T10, peripheral: GPIO4, signal: 'GPIO, 20', pin_signal: PIO4_20/TRIG_IN8/FC2_P4/CT2_MAT0/FLEXIO0_D28/ADC1_A6}
   - {pin_num: N8, peripheral: GPIO4, signal: 'GPIO, 14', pin_signal: PIO4_14/CT4_MAT2/FLEXIO0_D22}
   - {pin_num: T4, peripheral: GPIO4, signal: 'GPIO, 7', pin_signal: PIO4_7/CT_INP19/EZH_PIO31}
+  - {pin_num: A1, peripheral: LP_FLEXCOMM4, signal: LPFLEXCOMM_P0, pin_signal: PIO1_8/WUU0_IN10/LPTMR1_ALT3/TRACE_DATA0/FC4_P0/FC5_P4/CT_INP8/FLEXIO0_D16/EZH_PIO4/I3C1_SDA/ADC1_A8,
+    identifier: ''}
+  - {pin_num: B1, peripheral: LP_FLEXCOMM4, signal: LPFLEXCOMM_P1, pin_signal: PIO1_9/TRACE_DATA1/FC4_P1/FC5_P5/CT_INP9/FLEXIO0_D17/EZH_PIO5/I3C1_SCL/ADC1_A9, identifier: ''}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -574,8 +577,8 @@ void BOARD_InitPins(void)
                      /* Input Buffer Enable: Enables. */
                      | PORT_PCR_IBE(PCR_IBE_ibe1));
 
-    /* PORT1_8 (pin A1) is configured as PIO1_8, WUU0_IN10 */
-    PORT_SetPinMux(PORT1, 8U, kPORT_MuxAlt0);
+    /* PORT1_8 (pin A1) is configured as FC4_P0 */
+    PORT_SetPinMux(PORT1, 8U, kPORT_MuxAlt2);
 
     PORT1->PCR[8] = ((PORT1->PCR[8] &
                       /* Mask bits to zero which are setting */
@@ -584,8 +587,8 @@ void BOARD_InitPins(void)
                      /* Input Buffer Enable: Enables. */
                      | PORT_PCR_IBE(PCR_IBE_ibe1));
 
-    /* PORT1_9 (pin B1) is configured as PIO1_9 */
-    PORT_SetPinMux(PORT1, 9U, kPORT_MuxAlt0);
+    /* PORT1_9 (pin B1) is configured as FC4_P1 */
+    PORT_SetPinMux(PORT1, 9U, kPORT_MuxAlt2);
 
     PORT1->PCR[9] = ((PORT1->PCR[9] &
                       /* Mask bits to zero which are setting */
@@ -714,7 +717,7 @@ void BOARD_InitPins(void)
                      /* Input Buffer Enable: Enables. */
                      | PORT_PCR_IBE(PCR_IBE_ibe1));
 
-    /* PORT3_0 (pin B17) is configured as PIO3_0, WUU0_IN22 */
+    /* PORT3_0 (pin B17) is configured as WUU0_IN22, PIO3_0 */
     PORT_SetPinMux(PORT3, 0U, kPORT_MuxAlt0);
 
     PORT3->PCR[0] = ((PORT3->PCR[0] &
