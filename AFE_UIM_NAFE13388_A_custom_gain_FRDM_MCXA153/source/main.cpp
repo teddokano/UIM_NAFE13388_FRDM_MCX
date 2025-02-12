@@ -28,7 +28,7 @@ int main( void )
 
 	afe.begin();
 
-	afe.logical_ch_config( 0, 0x1010, 0x0084, 0x2900, 0x0000 );
+	afe.logical_ch_config( 0, 0x0010, 0x0084, 0x2900, 0x0000 );
 //	afe.logical_ch_config( 1, 0x2070, 0x0084, 0x2900, 0x0000 );
 
 	constexpr float read_delay	= 0.01;
@@ -91,7 +91,7 @@ int main( void )
 	constexpr	int	GAIN_COEFF0		= 0x80;
 	constexpr	int	GAIN_OFFSET0	= 0x90;
 
-	afe.write_r24( GAIN_COEFF0,  afe.read_r24( GAIN_COEFF0 ) * 2000.0 / 1677721.4 );
+//	afe.write_r24( GAIN_COEFF0,  afe.read_r24( GAIN_COEFF0 ) * 2000.0 / 1677721.4 );
 	afe.write_r24( GAIN_OFFSET0, afe.read_r24( GAIN_OFFSET0 ) );
 
 	printf( "=== after overwrite ===\r\n" );
