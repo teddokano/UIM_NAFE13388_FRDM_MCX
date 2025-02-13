@@ -7,9 +7,9 @@
 #include	"r01lib.h"
 #include	"afe/NAFE13388_UIM.h"
 #include	<math.h>
-#include	<time.h>
 
 #include	"coeffs.h"
+#include	"PrintOutput.h"
 
 SPI				spi( D11, D12, D13, D10 );	//	MOSI, MISO, SCLK, CS
 NAFE13388_UIM	afe( spi );
@@ -35,10 +35,11 @@ constexpr	int	CALIB_CUSTOM_1V_5V	= 14;
 using 	microvolt_t	= NAFE13388_UIM::microvolt_t;
 using 	raw_t		= NAFE13388_UIM::raw_t;
 
+PrintOutput	out( "test" );
 
 int main( void )
 {
-	printf( "***** Hello, NAFE13388 UIM board! *****\r\n" );
+	out.printf( "***** Hello, NAFE13388 UIM board! *****\r\n" );
 
 	spi.frequency( 1000 * 1000 );
 	spi.mode( 1 );
@@ -73,7 +74,7 @@ int main( void )
 	for ( auto i = 0; i < 32; i++ )
 		registers_list[ i ]	= 0x80 + i;
 
-	printf( "=== before overwrite ===\r\n" );
+	out.printf( "=== before overwrite ===\r\n" );
 	register24_dump( registers_list );
 
 	//
@@ -90,67 +91,46 @@ int main( void )
 		{ CALIB_CUSTOM_1V_5V, { 2015,  5.0 }, { 16, 1.0 }, CALIB_FOR_PGA_0_2 },
 	};
 	
-	for ( auto i = 0; i < sizeof( r ) / sizeof( ref_points ); i++ )
+	for ( unsigned int i = 0; i < sizeof( r ) / sizeof( ref_points ); i++ )
 		gain_offset_coeff( afe, r[ i ] );
 
-	printf( "=== after overwrite ===\r\n" );
+	out.printf( "=== after overwrite ===\r\n" );
 	register24_dump( registers_list );
-
-	//
-	//	open file for output
-	//
-
-	time_t	current_time;
-	current_time	= time( NULL );
-
-	char	filename[ 100 ];
-	sprintf( filename, "test %s.csv", ctime( &current_time ) );
-
-	FILE	*fp;
-	if ( NULL == (fp	= fopen( filename, "w" )) )
-	{
-		printf( "file open error\r\n" );
-		return 0;
-	}
 
 	//
 	//	operation with customized gain/offset
 	//
 
-	printf( "     count" );
-	printf( "      NONE" );
-	printf( "   NONE_5V" );
-	printf( "  NONE_10V" );
-	printf( "  Cal_dflt" );
-	printf( "    Cal_5V" );
-	printf( "   Cal_10V" );
+	out.printf( "     count" );
+	out.printf( "      NONE" );
+	out.printf( "   NONE_5V" );
+	out.printf( "  NONE_10V" );
+	out.printf( "  Cal_dflt" );
+	out.printf( "    Cal_5V" );
+	out.printf( "   Cal_10V" );
 
-	printf( "      NONE" );
-	printf( "   NONE_5V" );
-	printf( "  NONE_10V" );
-	printf( "  Cal_dflt" );
-	printf( "    Cal_5V" );
-	printf( "   Cal_10V" );
+	out.printf( "      NONE" );
+	out.printf( "   NONE_5V" );
+	out.printf( "  NONE_10V" );
+	out.printf( "  Cal_dflt" );
+	out.printf( "    Cal_5V" );
+	out.printf( "   Cal_10V" );
 
-	printf( "\r\n" );
+	out.printf( "\r\n" );
 
 	long	count	= 0;
 	raw_t	data;
 	
 	while ( true )
 	{
-		 printf(     " %8ld, ", count );
-		fprintf( fp, " %8ld, ", count );
-		count++;
+		out.printf( " %8ld, ", count++ );
 		
 		for ( auto ch = 0; ch < 14; ch++ )
 		{
 			data	= afe.read<raw_t>( ch, read_delay );
-			 printf(     " %8ld,", data );
-			fprintf( fp, " %8ld,", data );
+			out.printf( " %8ld,", data );
 		}
-		 printf(     "\r\n" );
-		fprintf( fp, "\r\n" );
+		out.printf( "\r\n" );
 
 		wait( 0.05 );
 	}
@@ -158,13 +138,13 @@ int main( void )
 
 void logical_ch_config_view( int channel )
 {
-	printf( "logical channel %02d\r\n", channel );
+	out.printf( "logical channel %02d\r\n", channel );
 	afe.write_r16( channel );
 
 	std::vector<uint16_t>	reg_list = { 0x0020, 0x0021, 0x0022, 0x0023 };
 	register16_dump( reg_list );
 
-	printf( "\r\n" );
+	out.printf( "\r\n" );
 }
 
 void register16_dump( const std::vector<uint16_t> &reg_list )
@@ -172,7 +152,7 @@ void register16_dump( const std::vector<uint16_t> &reg_list )
 	for_each(
 		reg_list.begin(),
 		reg_list.end(),
-		[]( auto reg ) { printf( "  0x%04X: 0x%04X\r\n", reg, afe.read_r16( reg ) ); }
+		[]( auto reg ) { out.printf( "  0x%04X: 0x%04X\r\n", reg, afe.read_r16( reg ) ); }
 	);
 }
 
@@ -181,7 +161,7 @@ void register24_dump( const std::vector<uint16_t> &reg_list )
 	for_each(
 		reg_list.begin(),
 		reg_list.end(),
-		//[]( auto reg ) { printf( "  0x%04X: 0x%06lX\r\n", reg, afe.read_r24( reg ) ); }
-		[]( auto reg ) { printf( "  0x%04X: %ld\r\n", reg, afe.read_r24( reg ) ); }
+		//[]( auto reg ) { out.printf( "  0x%04X: 0x%06lX\r\n", reg, afe.read_r24( reg ) ); }
+		[]( auto reg ) { out.printf( "  0x%04X: %ld\r\n", reg, afe.read_r24( reg ) ); }
 	);
 }
