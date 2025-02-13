@@ -10,6 +10,7 @@
 
 #include	"coeffs.h"
 #include	"PrintOutput.h"
+#include	<functional>
 
 SPI				spi( D11, D12, D13, D10 );	//	MOSI, MISO, SCLK, CS
 NAFE13388_UIM	afe( spi );
@@ -26,9 +27,8 @@ constexpr int	CALIB_CUSTOM_10V	= 12;
 constexpr int	CALIB_NONE_1V_5V	= 13;
 constexpr int	CALIB_CUSTOM_1V_5V	= 14;
 
-void	logical_ch_config_view( int channel );
-void	register16_dump( const std::vector<uint16_t> &reg_list );
-void	register24_dump( const std::vector<uint16_t> &reg_list, int cols = 4 );
+void	logical_ch_config_view( void );
+void	register_dump( const std::vector<uint16_t> &reg_list, std::function<void(int)>  func, int cols = 4 );
 
 using 	raw_t		= NAFE13388_UIM::raw_t;
 
@@ -58,7 +58,7 @@ int main( void )
 	afe.logical_ch_config( 12, INPUT_A1P_SINGLE, (CALIB_NONE_1V_5V   << 12) | 0x0084, 0x2900, 0x0000 );
 	afe.logical_ch_config( 13, INPUT_A1P_SINGLE, (CALIB_CUSTOM_1V_5V << 12) | 0x0084, 0x2900, 0x0000 );
 
-	logical_ch_config_view( 0 );
+	logical_ch_config_view();
 
 	//
 	//	showing gain/offset coefficients
@@ -70,7 +70,7 @@ int main( void )
 		registers_list[ i ]	= 0x80 + i;
 
 	out.printf( "=== GAIN_COEFF and OFFSET_COEFF registers before overwrite ===\r\n" );
-	register24_dump( registers_list );
+	register_dump( registers_list, []( int v ){ out.printf( "  %8ld @ 0x%04X", afe.read_r24( v ), v ); } );
 
 	//
 	//	gain/offset customization
@@ -89,7 +89,7 @@ int main( void )
 		gain_offset_coeff( afe, r[ i ] );
 
 	out.printf( "=== GAIN_COEFF and OFFSET_COEFF registers after overwrite ===\r\n" );
-	register24_dump( registers_list );
+	register_dump( registers_list, []( int v ){ out.printf( "  %8ld @ 0x%04X", afe.read_r24( v ), v ); } );
 
 	//
 	//	operation with customized gain/offset
@@ -131,37 +131,32 @@ int main( void )
 	}
 }
 
-void logical_ch_config_view( int channel )
+void logical_ch_config_view( void )
 {
-	out.printf( "logical channel %02d\r\n", channel );
-	afe.write_r16( channel );
-
-	std::vector<uint16_t>	reg_list = { 0x0020, 0x0021, 0x0022, 0x0023 };
-	register16_dump( reg_list );
-
-	out.printf( "\r\n" );
-}
-
-void register16_dump( const std::vector<uint16_t> &reg_list )
-{
-	for_each(
-		reg_list.begin(),
-		reg_list.end(),
-		[]( auto reg ) { out.printf( "  0x%04X: 0x%04X\r\n", reg, afe.read_r16( reg ) ); }
-	);
-}
-
-void register24_dump( const std::vector<uint16_t> &reg_list, int cols )
-{
-#if 0
-	for_each(
-		reg_list.begin(),
-		reg_list.end(),
-		//[]( auto reg ) { out.printf( "  0x%04X: 0x%06lX\r\n", reg, afe.read_r24( reg ) ); }
-		[]( auto reg ) { out.printf( "  0x%04X: %ld\r\n", reg, afe.read_r24( reg ) ); }
-	);
-#else
+	uint16_t	en_ch_bitmap= afe.read_r16( 0x0024 );
+	out.printf( "enabled logical channel(s) %2d\r\n", afe.enabled_channels );
 	
+	std::vector<uint16_t>	reg_list = { 0x0020, 0x0021, 0x0022, 0x0023 };
+
+	for ( auto channel = 0; channel < 16; channel++ )
+	{	
+		out.printf( "  logical channel %2d : ", channel );
+
+		if ( en_ch_bitmap & (0x1 << channel) )
+		{
+			afe.write_r16( channel );
+
+			register_dump( reg_list, []( int v ){ out.printf(  "  0x%04X: 0x%04X", v, afe.read_r16( v ) ); }, 4 );
+		}
+		else
+		{
+			out.printf(  "  (disabled)\r\n" );
+		}
+	}
+}
+
+void register_dump( const std::vector<uint16_t> &reg_list, std::function<void(int)> func, int cols )
+{
 	const auto	length	= reg_list.size();
 	const auto	raws	= (length + cols - 1) / cols;
 	
@@ -175,14 +170,11 @@ void register24_dump( const std::vector<uint16_t> &reg_list, int cols )
 			auto	index	= i + j * raws;
 			
 			if ( index < length  )
-			{
-				auto	v	= reg_list[ i + j * raws ];
-				out.printf( "  %8ld @ 0x%04X", afe.read_r24( v ), v );			
-			}
-
+				func( reg_list[ index ] );
 		}
 	}
 	
 	out.printf( "\r\n" );
-#endif
 }
+
+
