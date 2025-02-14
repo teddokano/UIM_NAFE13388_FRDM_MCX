@@ -78,12 +78,12 @@ int main( void )
 	//
 	
 	ref_points	r[]	= {
-		{ CALIB_NONE_5V,      { 2000,  5.0 }, {  0, 0.0 }, CALIB_NONE        },
-		{ CALIB_NONE_10V,     { 2000, 10.0 }, {  0, 0.0 }, CALIB_NONE        },
-		{ CALIB_CUSTOM_5V,    { 2000,  5.0 }, {  0, 0.0 }, CALIB_FOR_PGA_0_2 },
-		{ CALIB_CUSTOM_10V,   { 2000, 10.0 }, {  0, 0.0 }, CALIB_FOR_PGA_0_2 },
-		{ CALIB_NONE_1V_5V,   { 2015,  5.0 }, { 16, 1.0 }, CALIB_NONE        },
-		{ CALIB_CUSTOM_1V_5V, { 2015,  5.0 }, { 16, 1.0 }, CALIB_FOR_PGA_0_2 },
+		{ CALIB_NONE_5V,      {  5.0, 2000 }, {  0.0, 0 }, CALIB_NONE        },
+		{ CALIB_NONE_10V,     { 10.0, 2000 }, {  0.0, 0 }, CALIB_NONE        },
+		{ CALIB_CUSTOM_5V,    {  5.0, 2000 }, {  0.0, 0 }, CALIB_FOR_PGA_0_2 },
+		{ CALIB_CUSTOM_10V,   { 10.0, 2000 }, {  0.0, 0 }, CALIB_FOR_PGA_0_2 },
+		{ CALIB_NONE_1V_5V,   {  5.0, 2015 }, { 1.0, 16 }, CALIB_NONE        },
+		{ CALIB_CUSTOM_1V_5V, {  5.0, 2015 }, { 1.0, 16 }, CALIB_FOR_PGA_0_2 },
 	};
 	
 	for ( unsigned int i = 0; i < sizeof( r ) / sizeof( ref_points ); i++ )

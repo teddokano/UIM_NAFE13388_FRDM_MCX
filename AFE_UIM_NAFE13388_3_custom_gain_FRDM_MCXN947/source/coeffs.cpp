@@ -6,7 +6,7 @@
 
 #include	"coeffs.h"
 
-void gain_offset_coeff( NAFE13388_UIM &afe, ref_points ref )
+void gain_offset_coeff( NAFE13388_UIM &afe, ref_points &ref )
 {
 	constexpr double	pga1x_voltage		= 5.0;
 	constexpr int		adc_resolution		= 24;
