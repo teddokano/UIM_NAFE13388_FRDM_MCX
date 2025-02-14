@@ -1,3 +1,9 @@
+/*
+ *  @author Tedd OKANO
+ *
+ *  Released under the MIT license
+ */
+
 #include	"r01lib.h"
 #include	"afe/NAFE13388_UIM.h"
 
@@ -9,8 +15,8 @@ volatile bool	drdy_wait;
 constexpr uint32_t	timeout_limit	= 100000000;
 
 void	DRDY_int_handler( void );
-void	logical_ch_config_view( int channel );
-void	register16_dump( const std::vector<uint16_t> &reg_list );
+void	logical_ch_config_view( void );
+void	table_view( const std::vector<uint16_t> &reg_list, std::function<void(int)> func, int cols = 4 );
 
 enum	output_type	{ RAW, MICRO_VOLT };
 
@@ -31,8 +37,8 @@ int main( void )
 	afe.logical_ch_config( 0, 0x1070, 0x0084, 0x2900, 0x0000 );
 	afe.logical_ch_config( 1, 0x2070, 0x0084, 0x2900, 0x0000 );
 
-	logical_ch_config_view( 0 );
-	logical_ch_config_view( 1 );
+	printf( "\r\nenabled logical channel(s) %2d\r\n", afe.enabled_channels );
+	logical_ch_config_view();
 
 	ADC_nDRDY.rise( DRDY_int_handler );
 
@@ -44,9 +50,9 @@ int main( void )
 //	constexpr bool output_type_selection	= RAW;
 
 	if ( output_type_selection == MICRO_VOLT )
-		printf( "values in micro-volt\r\n" );
+		printf( "\r\nvalues in micro-volt\r\n" );
 	else
-		printf( "values in raw\r\n" );
+		printf( "\r\nvalues in raw\r\n" );
 
 
 	while ( true )
@@ -82,22 +88,46 @@ void DRDY_int_handler( void )
 	drdy_wait	= false;
 }
 
-void logical_ch_config_view( int channel )
+void logical_ch_config_view( void )
 {
-	printf( "logical channel %02d\r\n", channel );
-	afe.write_r16( channel );
-
+	uint16_t	en_ch_bitmap= afe.read_r16( 0x0024 );
+	
 	std::vector<uint16_t>	reg_list = { 0x0020, 0x0021, 0x0022, 0x0023 };
-	register16_dump( reg_list );
 
-	printf( "\r\n" );
+	for ( auto channel = 0; channel < 16; channel++ )
+	{	
+		printf( "  logical channel %2d : ", channel );
+
+		if ( en_ch_bitmap & (0x1 << channel) )
+		{
+			afe.write_r16( channel );
+			table_view( reg_list, []( int v ){ printf(  "  0x%04X @ 0x%04X", afe.read_r16( v ), v ); }, 4 );
+		}
+		else
+		{
+			printf(  "  (disabled)\r\n" );
+		}
+	}
 }
 
-void register16_dump( const std::vector<uint16_t> &reg_list )
+void table_view( const std::vector<uint16_t> &reg_list, std::function<void(int)> func, int cols )
 {
-	for_each(
-		reg_list.begin(),
-		reg_list.end(),
-		[]( auto reg ) { printf( "  0x%04X: 0x%04X\r\n", reg, afe.read_r16( reg ) ); }
-	);
+	const auto	length	= (int)reg_list.size();
+	const auto	raws	= (int)(length + cols - 1) / cols;
+	
+	for ( auto i = 0; i < raws; i++  )
+	{
+		if ( i )
+			printf( "\r\n" );
+			
+		for ( auto j = 0; j < cols; j++  )
+		{
+			auto	index	= i + j * raws;
+			
+			if ( index < length  )
+				func( reg_list[ index ] );
+		}
+	}
+	
+	printf( "\r\n" );
 }
