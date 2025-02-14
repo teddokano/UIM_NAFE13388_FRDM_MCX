@@ -4,14 +4,15 @@
  *  Released under the MIT license
  */
 
+#ifndef NAFE_COEFFS_H
+#define NAFE_COEFFS_H
+
 #include	"r01lib.h"
 #include	"afe/NAFE13388_UIM.h"
 #include	<math.h>
 
 constexpr	int	GAIN_COEFF			= 0x80;
 constexpr	int	OFFSET_COEFF		= 0x90;
-
-
 
 typedef struct	_point	{
 	int32_t	data;
@@ -26,3 +27,5 @@ typedef struct	_ref_points	{
 } ref_points;
 
 void	gain_offset_coeff( NAFE13388_UIM &afe, ref_points ref );
+
+#endif	//	NAFE_COEFFS_H

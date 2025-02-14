@@ -10,7 +10,6 @@
 
 #include	"coeffs.h"
 #include	"PrintOutput.h"
-#include	<functional>
 
 SPI				spi( D11, D12, D13, D10 );	//	MOSI, MISO, SCLK, CS
 NAFE13388_UIM	afe( spi );
@@ -28,7 +27,7 @@ constexpr int	CALIB_NONE_1V_5V	= 13;
 constexpr int	CALIB_CUSTOM_1V_5V	= 14;
 
 void	logical_ch_config_view( void );
-void	register_dump( const std::vector<uint16_t> &reg_list, std::function<void(int)>  func, int cols = 4 );
+void	table_view( const std::vector<uint16_t> &reg_list, std::function<void(int)> func, int cols = 4 );
 
 using 	raw_t		= NAFE13388_UIM::raw_t;
 
@@ -37,6 +36,7 @@ PrintOutput	out( "test" );
 int main( void )
 {
 	out.printf( "***** Hello, NAFE13388 UIM board! *****\r\n" );
+	out.printf( "---   custom gain & offset sample   ---\r\n" );
 
 	spi.frequency( 1000 * 1000 );
 	spi.mode( 1 );
@@ -58,6 +58,7 @@ int main( void )
 	afe.logical_ch_config( 12, INPUT_A1P_SINGLE, (CALIB_NONE_1V_5V   << 12) | 0x0084, 0x2900, 0x0000 );
 	afe.logical_ch_config( 13, INPUT_A1P_SINGLE, (CALIB_CUSTOM_1V_5V << 12) | 0x0084, 0x2900, 0x0000 );
 
+	out.printf( "\r\nenabled logical channel(s) %2d\r\n", afe.enabled_channels );
 	logical_ch_config_view();
 
 	//
@@ -69,8 +70,8 @@ int main( void )
 	for ( auto i = 0; i < 32; i++ )
 		registers_list[ i ]	= 0x80 + i;
 
-	out.printf( "=== GAIN_COEFF and OFFSET_COEFF registers before overwrite ===\r\n" );
-	register_dump( registers_list, []( int v ){ out.printf( "  %8ld @ 0x%04X", afe.read_r24( v ), v ); } );
+	out.printf( "\r\n=== GAIN_COEFF and OFFSET_COEFF registers before overwrite ===\r\n" );
+	table_view( registers_list, []( int v ){ out.printf( "  %8ld @ 0x%04X", afe.read_r24( v ), v ); } );
 
 	//
 	//	gain/offset customization
@@ -88,14 +89,16 @@ int main( void )
 	for ( unsigned int i = 0; i < sizeof( r ) / sizeof( ref_points ); i++ )
 		gain_offset_coeff( afe, r[ i ] );
 
-	out.printf( "=== GAIN_COEFF and OFFSET_COEFF registers after overwrite ===\r\n" );
-	register_dump( registers_list, []( int v ){ out.printf( "  %8ld @ 0x%04X", afe.read_r24( v ), v ); } );
+	out.printf( "\r\n=== GAIN_COEFF and OFFSET_COEFF registers after overwrite ===\r\n" );
+	table_view( registers_list, []( int v ){ out.printf( "  %8ld @ 0x%04X", afe.read_r24( v ), v ); } );
 
 	//
 	//	operation with customized gain/offset
 	//
 
+	out.printf( "\r\n" );
 	out.printf( "     count" );
+
 	out.printf( "      NONE" );
 	out.printf( "   NONE_5V" );
 	out.printf( "  NONE_10V" );
@@ -109,6 +112,9 @@ int main( void )
 	out.printf( "  Cal_dflt" );
 	out.printf( "    Cal_5V" );
 	out.printf( "   Cal_10V" );
+
+	out.printf( " NONE_1V5V" );
+	out.printf( "  Cal_1V5V" );
 
 	out.printf( "\r\n" );
 
@@ -134,7 +140,6 @@ int main( void )
 void logical_ch_config_view( void )
 {
 	uint16_t	en_ch_bitmap= afe.read_r16( 0x0024 );
-	out.printf( "enabled logical channel(s) %2d\r\n", afe.enabled_channels );
 	
 	std::vector<uint16_t>	reg_list = { 0x0020, 0x0021, 0x0022, 0x0023 };
 
@@ -145,8 +150,7 @@ void logical_ch_config_view( void )
 		if ( en_ch_bitmap & (0x1 << channel) )
 		{
 			afe.write_r16( channel );
-
-			register_dump( reg_list, []( int v ){ out.printf(  "  0x%04X: 0x%04X", v, afe.read_r16( v ) ); }, 4 );
+			table_view( reg_list, []( int v ){ out.printf(  "  0x%04X: 0x%04X", v, afe.read_r16( v ) ); }, 4 );
 		}
 		else
 		{
@@ -155,10 +159,10 @@ void logical_ch_config_view( void )
 	}
 }
 
-void register_dump( const std::vector<uint16_t> &reg_list, std::function<void(int)> func, int cols )
+void table_view( const std::vector<uint16_t> &reg_list, std::function<void(int)> func, int cols )
 {
-	const auto	length	= reg_list.size();
-	const auto	raws	= (length + cols - 1) / cols;
+	const auto	length	= (int)reg_list.size();
+	const auto	raws	= (int)(length + cols - 1) / cols;
 	
 	for ( auto i = 0; i < raws; i++  )
 	{
@@ -176,5 +180,4 @@ void register_dump( const std::vector<uint16_t> &reg_list, std::function<void(in
 	
 	out.printf( "\r\n" );
 }
-
 

@@ -4,6 +4,9 @@
  *  Released under the MIT license
  */
 
+#ifndef NAFE_PRINTOUTPUT_H
+#define NAFE_PRINTOUTPUT_H
+
 #include	<stdio.h>
 
 class	PrintOutput
@@ -15,3 +18,4 @@ private:
 	FILE	*fp;
 };
 
+#endif	//	NAFE_PRINTOUTPUT_H
