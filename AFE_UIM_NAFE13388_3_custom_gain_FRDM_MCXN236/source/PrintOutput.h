@@ -14,6 +14,7 @@ class	PrintOutput
 public:
 	PrintOutput( const char *file_name, const char *file_ext = "csv", bool time_info = true );
 	void	printf( const char *format, ... );
+	void	screen( const char *s );
 private:
 	FILE	*fp;
 };

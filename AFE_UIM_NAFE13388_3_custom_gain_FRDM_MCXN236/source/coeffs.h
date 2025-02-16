@@ -26,6 +26,6 @@ typedef struct	_ref_points	{
 	int		cal_index;
 } ref_points;
 
-void	gain_offset_coeff( NAFE13388_UIM &afe, ref_points &ref );
+void	gain_offset_coeff( NAFE13388_UIM &afe, const ref_points &ref );
 
 #endif	//	NAFE_COEFFS_H

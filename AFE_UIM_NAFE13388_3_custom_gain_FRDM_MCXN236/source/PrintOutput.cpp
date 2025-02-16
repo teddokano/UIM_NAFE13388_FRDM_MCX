@@ -46,3 +46,8 @@ void PrintOutput::printf( const char *format, ... )
 	if ( fp )
 		fputs( s, fp );
 }
+
+void PrintOutput::screen( const char* s )
+{
+	::printf( "%s", s );
+}
