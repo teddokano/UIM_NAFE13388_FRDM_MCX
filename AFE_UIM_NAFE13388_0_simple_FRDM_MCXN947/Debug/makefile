@@ -66,7 +66,7 @@ main-build: AFE_UIM_NAFE13388_0_simple_FRDM_MCXN947.axf
 AFE_UIM_NAFE13388_0_simple_FRDM_MCXN947.axf: $(OBJS) $(USER_OBJS) makefile $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU C++ Linker'
-	arm-none-eabi-c++ -nostdlib -L"/Users/tedd/dev/mcuxpresso/UIM_NAFE13388_FRDM_MCX/_r01lib_frdm_mcxn947/Debug" -Xlinker -Map="AFE_UIM_NAFE13388_0_simple_FRDM_MCXN947.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -Xlinker --cref -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -T AFE_UIM_NAFE13388_0_simple_FRDM_MCXN947_Debug.ld -u _printf_float -u _scanf_float -o "AFE_UIM_NAFE13388_0_simple_FRDM_MCXN947.axf" $(OBJS) $(USER_OBJS) $(LIBS) -l_r01lib_frdm_mcxn947
+	arm-none-eabi-c++ -nostdlib -L"/Users/tedd/dev/mcuxpresso/UIM_NAFE13388_FRDM_MCX/_r01lib_frdm_mcxn947/Debug" -Xlinker -Map="AFE_UIM_NAFE13388_0_simple_FRDM_MCXN947.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -Xlinker --cref -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -T AFE_UIM_NAFE13388_0_simple_FRDM_MCXN947_Debug.ld -o "AFE_UIM_NAFE13388_0_simple_FRDM_MCXN947.axf" $(OBJS) $(USER_OBJS) $(LIBS) -l_r01lib_frdm_mcxn947
 	@echo 'Finished building target: $@'
 	@echo ' '
 

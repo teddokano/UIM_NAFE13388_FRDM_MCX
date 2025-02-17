@@ -6,13 +6,13 @@
  * Generated linker script file for MCXA153
  * Created from library.ldt by FMCreateLinkLibraries
  * Using Freemarker v2.3.30
- * MCUXpresso IDE v24.12 [Build 148] [2025-01-10] on 2025/02/17 6:53:04
+ * MCUXpresso IDE v24.12 [Build 148] [2025-01-10] on 2025/02/17 9:26:27
  */
 
 GROUP (
   "libgcc.a"
-  "libc_nano.a"
-  "libstdc++_nano.a"
+  "libc.a"
+  "libstdc++.a"
   "libm.a"
   "libcr_newlib_semihost.a"
   "crti.o"
