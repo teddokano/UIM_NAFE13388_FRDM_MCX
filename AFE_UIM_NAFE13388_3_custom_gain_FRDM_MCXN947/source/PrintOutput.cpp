@@ -16,6 +16,9 @@ PrintOutput::PrintOutput( const char *file_name, const char *file_ext, bool time
 	char			s[ 100 ];
 	char			filename[ filename_length ];
 
+	if ( !file_name )
+		return;
+
 	if ( time_info )
 	{
 		time_t	current_time;

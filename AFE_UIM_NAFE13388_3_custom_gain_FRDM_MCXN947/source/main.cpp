@@ -15,6 +15,7 @@
 SPI				spi( D11, D12, D13, D10 );	//	MOSI, MISO, SCLK, CS
 NAFE13388_UIM	afe( spi );
 PrintOutput		out( "test" );
+//PrintOutput	out( nullptr );	//use this line to disable file output
 
 using enum	NAFE13388_UIM::Register16;
 using enum	NAFE13388_UIM::Register24;
