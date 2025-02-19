@@ -13,14 +13,18 @@
 PrintOutput::PrintOutput( const char *file_name, const char *file_ext, bool time_info )
 {
 	constexpr int	filename_length	= 256;
-	char	filename[ filename_length ];
+	char			s[ 100 ];
+	char			filename[ filename_length ];
 
 	if ( time_info )
 	{
 		time_t	current_time;
 		current_time	= time( NULL );
 
-		sprintf( filename, "%s_%s.%s", file_name, ctime( &current_time ), file_ext );
+		strftime( s, 100, "%Y-%m-%d_%a_%H-%M-%S", localtime( &current_time ) );
+		sprintf( filename, "%s_%s.%s", file_name, s, file_ext );
+
+		printf( "log file name : %s\r\n", filename );
 	}
 	else
 	{

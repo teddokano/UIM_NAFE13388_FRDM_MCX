@@ -6,6 +6,8 @@
 
 #include	"coeffs.h"
 
+using enum	NAFE13388_UIM::Register24;
+
 void gain_offset_coeff( NAFE13388_UIM &afe, const ref_points &ref )
 {
 	constexpr double	pga1x_voltage		= 5.0;
@@ -22,8 +24,8 @@ void gain_offset_coeff( NAFE13388_UIM &afe, const ref_points &ref )
 	double	custom_gain			= dv_slope * (fullscale_voltage / fullscale_data);
 	double	custom_offset		= (dv_slope * ref.low.voltage - ref.low.data) / custom_gain;
 	
-	int32_t	gain_coeff_cal		= afe.read_r24( GAIN_COEFF   + ref.cal_index );
-	int32_t	offsset_coeff_cal	= afe.read_r24( OFFSET_COEFF + ref.cal_index );
+	int32_t	gain_coeff_cal		= afe.reg( GAIN_COEFF0   + ref.cal_index );
+	int32_t	offsset_coeff_cal	= afe.reg( OFFSET_COEFF0 + ref.cal_index );
 	int32_t	gain_coeff_new		= round( gain_coeff_cal * custom_gain );
 	int32_t	offset_coeff_new	= custom_offset - offsset_coeff_cal;
 
@@ -34,7 +36,7 @@ void gain_offset_coeff( NAFE13388_UIM &afe, const ref_points &ref )
 	printf( "offset_coeff_new = %8ld\r\n", offset_coeff_new );
 #endif
 	
-	afe.write_r24( GAIN_COEFF   + ref.coeff_index, gain_coeff_new   );
-	afe.write_r24( OFFSET_COEFF + ref.coeff_index, offset_coeff_new );
+	afe.reg( GAIN_COEFF0   + ref.coeff_index, gain_coeff_new   );
+	afe.reg( OFFSET_COEFF0 + ref.coeff_index, offset_coeff_new );
 }
 

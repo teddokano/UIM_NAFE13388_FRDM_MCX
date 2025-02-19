@@ -11,9 +11,6 @@
 #include	"afe/NAFE13388_UIM.h"
 #include	<math.h>
 
-constexpr	int	GAIN_COEFF			= 0x80;
-constexpr	int	OFFSET_COEFF		= 0x90;
-
 typedef struct	_point	{
 	double	voltage;
 	int32_t	data;

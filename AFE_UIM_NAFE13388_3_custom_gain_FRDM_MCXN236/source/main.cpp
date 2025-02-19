@@ -145,7 +145,8 @@ int main( void )
 			out.screen( ch % 2 ? "\033[49m" : "\033[47m" );
 			out.printf( " %8ld,", data );
 		}
-		out.printf( "\r\n" );
+		//out.printf( "\r\n" );
+		out.printf( "\n" );
 
 		wait( 0.05 );
 	}
