@@ -66,7 +66,7 @@ main-build: AFE_UIM_NAFE13388_0_simple_FRDM_MCXA153.axf
 AFE_UIM_NAFE13388_0_simple_FRDM_MCXA153.axf: $(OBJS) $(USER_OBJS) makefile $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU C++ Linker'
-	arm-none-eabi-c++ -nostdlib -L"/Users/tedd/dev/mcuxpresso/UIM_NAFE13388_FRDM_MCX/_r01lib_frdm_mcxa153/Release" -Xlinker -Map="AFE_UIM_NAFE13388_0_simple_FRDM_MCXA153.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -Xlinker --cref -mcpu=cortex-m33+nodsp -mthumb -T AFE_UIM_NAFE13388_0_simple_FRDM_MCXA153_Release.ld -u _printf_float -u _scanf_float -o "AFE_UIM_NAFE13388_0_simple_FRDM_MCXA153.axf" $(OBJS) $(USER_OBJS) $(LIBS) -l_r01lib_frdm_mcxa153
+	arm-none-eabi-c++ -nostdlib -L"/Users/tedd/dev/mcuxpresso/UIM_NAFE13388_FRDM_MCX/_r01lib_frdm_mcxa153/Release" -Xlinker -Map="AFE_UIM_NAFE13388_0_simple_FRDM_MCXA153.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -Xlinker --cref -mcpu=cortex-m33+nodsp -mthumb -T AFE_UIM_NAFE13388_0_simple_FRDM_MCXA153_Release.ld -o "AFE_UIM_NAFE13388_0_simple_FRDM_MCXA153.axf" $(OBJS) $(USER_OBJS) $(LIBS) -l_r01lib_frdm_mcxa153
 	@echo 'Finished building target: $@'
 	@echo ' '
 
