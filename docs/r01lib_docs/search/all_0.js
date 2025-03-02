@@ -16,6 +16,7 @@ var searchData=
   ['_5fscl_13',['_scl',['../class_i2_c.html#a44f399fc7fa62a3d606e584371f29b33',1,'I2C']]],
   ['_5fsda_14',['_sda',['../class_i2_c.html#af8f7be292c9db76518888e35bc5e2335',1,'I2C']]],
   ['_5fspi_15',['_spi',['../class_s_p_i__for___a_f_e.html#ac158962137993fa62b11b4dc152ce7a7',1,'SPI_for_AFE']]],
-  ['_5fvalue_16',['_value',['../class_a_d5161__base.html#a1fbe4b708aa742e06b9a8e9e4754c2f3',1,'AD5161_base::_value'],['../class_digital_in_out.html#a8c80e99be8680936898ebe12f706e8aa',1,'DigitalInOut::_value']]],
-  ['_5fwidth_17',['_width',['../class_bus_in_out.html#aa84db6a2b3cd7e79614adae8353b5306',1,'BusInOut']]]
+  ['_5fticker_5fcallback_16',['_ticker_callback',['../_ticker_8cpp.html#a99195e6b477a7cb13981fd777ade3c7e',1,'Ticker.cpp']]],
+  ['_5fvalue_17',['_value',['../class_a_d5161__base.html#a1fbe4b708aa742e06b9a8e9e4754c2f3',1,'AD5161_base::_value'],['../class_digital_in_out.html#a8c80e99be8680936898ebe12f706e8aa',1,'DigitalInOut::_value']]],
+  ['_5fwidth_18',['_width',['../class_bus_in_out.html#aa84db6a2b3cd7e79614adae8353b5306',1,'BusInOut']]]
 ];

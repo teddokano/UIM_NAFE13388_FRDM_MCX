@@ -36,7 +36,7 @@ var searchData=
   ['reg_5fwrite_33',['reg_write',['../class_i2_c.html#aa1dcd88fb57d976449f635cdaeb22e77',1,'I2C::reg_write(uint8_t targ, uint8_t reg, const uint8_t *dp, int length)'],['../class_i2_c.html#aed1ee123770c39102205e35df783453c',1,'I2C::reg_write(uint8_t targ, uint8_t reg, uint8_t data)'],['../class_i3_c.html#a5a9df0abd2b680541282582c2fa8ae88',1,'I3C::reg_write(uint8_t targ, uint8_t reg, const uint8_t *dp, int length, bool stop=STOP)']]],
   ['reg_5fxfer_34',['reg_xfer',['../class_i3_c.html#a16fe5e1f0d775364da4a5e88d068e756',1,'I3C']]],
   ['regist_35',['regist',['../class_interrupt_in.html#a15393f2fe475d5b5afcc4a7f7600017b',1,'InterruptIn']]],
-  ['repeat_36',['repeat',['../class_ticker.html#adad394cb4cd0f1c9184bf30cab9ddadea13b286c8f1b7181b3232195343b1588e',1,'Ticker']]],
+  ['repeat_36',['repeat',['../class_ticker.html#a055827fcc292319a2f5734663315390ca13b286c8f1b7181b3232195343b1588e',1,'Ticker']]],
   ['repeated_5fstart_5fenable_37',['repeated_start_enable',['../class_i2_c__device.html#aa7e393f9d636f9703047a96761828ade',1,'I2C_device']]],
   ['reserved0_38',['Reserved0',['../class_p_c_f85263_a.html#aa8b27745f67151341314514efb025411a0f47e41ee55ddfadb75b5900f1e1eca5',1,'PCF85263A']]],
   ['reserved0_39',['reserved0',['../class_p_c_a_l6524.html#a1b00b314b0625cdc3e5dd5dc5f691d12ab06e2613e1ebad3cbb7deb2accc3e3e9',1,'PCAL6524::reserved0'],['../class_p_c_a_l6534.html#ab5d7c5026e9395c2553f9622327a2e75a31d85fd7418b7f04a7806d424d72c93a',1,'PCAL6534::reserved0'],['../class_p_c_a_l9722.html#a679bb9293b5822848063926940d34b72a14dc836650c03eb330db4a71652111c5',1,'PCAL9722::reserved0']]],

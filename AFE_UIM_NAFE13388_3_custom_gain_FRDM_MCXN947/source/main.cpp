@@ -9,7 +9,6 @@
 #include	<math.h>
 #include	<array>
 
-#include	"coeffs.h"
 #include	"PrintOutput.h"
 
 SPI				spi( D11, D12, D13, D10 );	//	MOSI, MISO, SCLK, CS
@@ -22,6 +21,8 @@ using enum	NAFE13388_UIM::Register24;
 using enum	NAFE13388_UIM::Command;
 
 using 	raw_t			= NAFE13388_UIM::raw_t;
+using 	ref_points		= NAFE13388_UIM::ref_points;
+using	ch_setting_t	= NAFE13388_UIM::ch_setting_t;
 
 constexpr int	INPUT_GND			= 0x0010;
 constexpr int	INPUT_A1P_SINGLE	= 0x1010;
@@ -37,7 +38,7 @@ enum CoeffIndex {
 	CAL_1V5V_CUSTOM,
 };
 
-constexpr ref_points	r[]	= {
+constexpr NAFE13388_UIM::ref_points	r[]	= {
 	{ CAL__5V_NONE,    {  5.0, 2000 }, {  0.0, 0 }, CAL_NONE        },
 	{ CAL_10V_NONE,    { 10.0, 2000 }, {  0.0, 0 }, CAL_NONE        },
 	{ CAL__5V_CUSTOM,  {  5.0, 2000 }, {  0.0, 0 }, CAL_FOR_PGA_0_2 },
@@ -45,8 +46,6 @@ constexpr ref_points	r[]	= {
 	{ CAL_1V5V_NONE,   {  5.0, 2015 }, { 1.0, 16 }, CAL_NONE        },
 	{ CAL_1V5V_CUSTOM, {  5.0, 2015 }, { 1.0, 16 }, CAL_FOR_PGA_0_2 },
 };
-
-using	ch_setting_t	= const uint16_t[ 4 ];
 
 constexpr ch_setting_t	chs[]	= {
 	{ INPUT_A1P_SINGLE, (CAL_NONE        << 12) | 0x0084, 0x2900, 0x0000 },
@@ -65,6 +64,7 @@ constexpr ch_setting_t	chs[]	= {
 	{ INPUT_GND       , (CAL_10V_CUSTOM  << 12) | 0x0084, 0x2900, 0x0000 },
 };
 
+void	reg_dump( NAFE13388_UIM::Register24 addr, int length );
 void	logical_ch_config_view( void );
 void	table_view( int size, int cols, std::function<void(int)> view, std::function<void(void)> linefeed = nullptr );
 
@@ -89,7 +89,7 @@ int main( void )
 
 	for ( auto i = 0U; i < sizeof( chs ) / sizeof( ch_setting_t ); i++ )
 		afe.logical_ch_config( i, chs[ i ] );
-	
+
 	out.printf( "\r\nenabled logical channel(s) %2d\r\n", afe.enabled_channels );
 	logical_ch_config_view();
 
@@ -97,16 +97,32 @@ int main( void )
 	//	gain/offset coefficient settings
 	//
 
-	out.printf( "\r\n=== GAIN_COEFF and OFFSET_COEFF registers before overwrite ===\r\n" );
-	table_view( 32, 4, []( int v ){ out.printf( "  %8ld @ 0x%04X", afe.reg( v + GAIN_COEFF0 ), v + GAIN_COEFF0 ); }, [](){ out.printf( "\r\n" ); });
+	out.printf( "\r\n=== GAIN_COEFF and OFFSET_COEFF registers default values ===\r\n" );
+	reg_dump( GAIN_COEFF0, 32 );
+
+	//	on-board re-calibration for "PGA_gain = 0.2" coefficients
+
+	afe.recalibrate( 0 );
+
+	out.printf( "\r\n=== GAIN_COEFF and OFFSET_COEFF registers after on-board calibration ===\r\n" );
+	reg_dump( GAIN_COEFF0, 32 );
+
+#if 0
+	afe.recalibrate( 0, 2, 2.5 );
+
+	out.printf( "\r\n=== GAIN_COEFF and OFFSET_COEFF registers after on-board calibration ===\r\n" );
+	reg_dump( GAIN_COEFF0, 32 );
+
+
+#endif
 
 	//	gain/offset customization
 	
 	for ( auto i = 0U; i < sizeof( r ) / sizeof( ref_points ); i++ )
-		gain_offset_coeff( afe, r[ i ] );
+		afe.gain_offset_coeff( r[ i ] );
 
 	out.printf( "\r\n=== GAIN_COEFF and OFFSET_COEFF registers after overwrite ===\r\n" );
-	table_view( 32, 4, []( int v ){ out.printf( "  %8ld @ 0x%04X", afe.reg( v + GAIN_COEFF0 ), v + GAIN_COEFF0 ); }, [](){ out.printf( "\r\n" ); });
+	reg_dump( GAIN_COEFF0, 32 );
 
 	//
 	//	operation with customized gain/offset
@@ -140,7 +156,7 @@ int main( void )
 	{
 		out.printf( " %8ld, ", count++ );
 		
-		for ( auto ch = 0; ch < 14; ch++ )
+		for ( auto ch = 0; ch < afe.enabled_channels; ch++ )
 		{
 			data	= afe.read<raw_t>( ch, read_delay );
 			out.screen( ch % 2 ? "\033[49m" : "\033[47m" );
@@ -151,6 +167,11 @@ int main( void )
 
 		wait( 0.05 );
 	}
+}
+
+void reg_dump( NAFE13388_UIM::Register24 addr, int length )
+{
+	table_view( length, 4, [ & ]( int v ){ out.printf( "  %8ld @ 0x%04X", afe.reg( v + addr ), v + addr ); }, [](){ out.printf( "\r\n" ); });
 }
 
 void logical_ch_config_view( void )
