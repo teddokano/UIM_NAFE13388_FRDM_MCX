@@ -6,13 +6,13 @@
  * Generated linker script file for MCXN236
  * Created from library.ldt by FMCreateLinkLibraries
  * Using Freemarker v2.3.30
- * MCUXpresso IDE v24.12 [Build 148] [2025-01-10] on 2025/03/02 9:06:43
+ * MCUXpresso IDE v24.12 [Build 148] [2025-01-10] on 2025/03/04 18:40:58
  */
 
 GROUP (
   "libgcc.a"
-  "libc.a"
-  "libstdc++.a"
+  "libc_nano.a"
+  "libstdc++_nano.a"
   "libm.a"
   "libcr_newlib_semihost.a"
   "crti.o"
