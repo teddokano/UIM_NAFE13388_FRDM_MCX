@@ -34,7 +34,7 @@ int main( void )
 
 	auto	timeout_count	= timeout_limit;
 
-	spi.frequency( 1000'000 );
+	spi.frequency( 1'000'000 );
 	spi.mode( 1 );
 
 	afe.begin();
@@ -79,9 +79,9 @@ int main( void )
 			}
 
 			if ( output_type_selection == MICRO_VOLT )
-				printf( " %11.2f,", afe.read<microvolt_t>( ch ) );
+				printf( " %11.2f,", afe.read<microvolt_t>( ch, NAFE13388_UIM::immidiate_read ) );
 			else
-				printf( " %8ld,",   afe.read<raw_t>( ch ) );
+				printf( " %8ld,",   afe.read<raw_t>( ch, NAFE13388_UIM::immidiate_read ) );
 		}
 		printf( "\r\n" );
 		wait( 0.05 );

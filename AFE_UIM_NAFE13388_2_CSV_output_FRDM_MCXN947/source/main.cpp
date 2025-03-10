@@ -27,15 +27,13 @@ int main( void )
 {
 	printf( "***** Hello, NAFE13388 UIM board! *****\r\n" );
 
-	spi.frequency( 1000'000 );
+	spi.frequency( 1'000'000 );
 	spi.mode( 1 );
 
 	afe.begin();
 
 	afe.logical_ch_config( 0, 0x1070, 0x3084, 0x2900, 0x0000 );
 	afe.logical_ch_config( 1, 0x2070, 0x3084, 0x2900, 0x0000 );
-
-	constexpr float read_delay	= 0.01;
 
 	printf( "\r\nenabled logical channel(s) %2d\r\n", afe.enabled_channels );
 	logical_ch_config_view();
@@ -66,9 +64,9 @@ int main( void )
 		for ( auto ch = 0; ch < 2; ch++ )
 		{
 			if ( output_type_selection == MICRO_VOLT )
-				fprintf( fp, " %11.2f,", afe.read<microvolt_t>( ch, read_delay ) );
+				fprintf( fp, " %11.2f,", afe.read<microvolt_t>( ch ) );
 			else
-				fprintf( fp, " %8ld,",   afe.read<raw_t>( ch, read_delay ) );
+				fprintf( fp, " %8ld,",   afe.read<raw_t>( ch ) );
 		}
 		fprintf( fp, "\r\n" );
 		wait( 0.05 );

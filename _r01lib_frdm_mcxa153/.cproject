@@ -142,6 +142,7 @@
 									<listOptionValue builtIn="false" value="__NEWLIB__"/>
 									<listOptionValue builtIn="false" value="SDK_DEBUGCONSOLE=0"/>
 									<listOptionValue builtIn="false" value="TARGET_A153"/>
+									<listOptionValue builtIn="false" value="SDK_DELAY_USE_DWT"/>
 								</option>
 								<option id="com.crt.advproject.gcc.thumb.1966743653" name="Thumb mode" superClass="com.crt.advproject.gcc.thumb" useByScannerDiscovery="false" value="true" valueType="boolean"/>
 								<option id="com.crt.advproject.gcc.arch.289398523" name="Architecture" superClass="com.crt.advproject.gcc.arch" useByScannerDiscovery="true" value="com.crt.advproject.gcc.target.cm33_nodsp" valueType="enumerated"/>

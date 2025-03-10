@@ -25,7 +25,7 @@ using 	ref_points		= NAFE13388_UIM::ref_points;
 using	ch_setting_t	= NAFE13388_UIM::ch_setting_t;
 
 constexpr int	INPUT_GND			= 0x0010;
-constexpr int	INPUT_A1P_SINGLE	= 0x1010;
+constexpr int	INPUT_A1P_SINGLE	= 0x1710;
 
 enum CoeffIndex {
 	CAL_FOR_PGA_0_2	= 0,
@@ -74,13 +74,15 @@ int main( void )
 	out.printf( "***** Hello, NAFE13388 UIM board! *****\r\n" );
 	out.printf( "---   custom gain & offset sample   ---\r\n" );
 
-	spi.frequency( 1000'000 );
+	spi.frequency( 1'000'000 );
 	spi.mode( 1 );
 
 	afe.begin();
 	
+	uint64_t	sn	= afe.serial_number();
+
 	out.printf( "part number   = %04lX (revision: %01X)\r\n", afe.part_number(), afe.revision_number() );
-	out.printf( "serial number = %llX\r\n", afe.serial_number() );
+	out.printf( "serial number = %06lX%06lX\r\n", (uint32_t)(sn >> 24), (uint32_t)sn & 0xFFFFFF );	//	to use NewlibNano
 	out.printf( "die temperature = %f℃\r\n", afe.temperature() );
 	
 	//
@@ -150,7 +152,6 @@ int main( void )
 
 	raw_t			data;
 	long			count		= 0;
-	constexpr float read_delay	= 0.01;
 
 	while ( true )
 	{
@@ -158,12 +159,12 @@ int main( void )
 		
 		for ( auto ch = 0; ch < afe.enabled_channels; ch++ )
 		{
-			data	= afe.read<raw_t>( ch, read_delay );
+			data	= afe.read<raw_t>( ch );
 			out.screen( ch % 2 ? "\033[49m" : "\033[47m" );
 			out.printf( " %8ld,", data );
 		}
-		//out.printf( "\r\n" );
-		out.printf( "\n" );
+		out.printf( "\r\n" );
+		//out.printf( "\n" );
 
 		wait( 0.05 );
 	}
