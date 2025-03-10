@@ -38,6 +38,7 @@ int main( void )
 	spi.mode( 1 );
 
 	afe.begin();
+	afe.blink_leds();
 
 	afe.logical_ch_config( 0, 0x1070, 0x3084, 0x2900, 0x0000 );
 	afe.logical_ch_config( 1, 0x2070, 0x3084, 0x2900, 0x0000 );

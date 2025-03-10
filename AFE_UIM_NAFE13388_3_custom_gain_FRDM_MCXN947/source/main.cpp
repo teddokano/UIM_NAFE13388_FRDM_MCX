@@ -78,6 +78,7 @@ int main( void )
 	spi.mode( 1 );
 
 	afe.begin();
+	afe.blink_leds();
 	
 	uint64_t	sn	= afe.serial_number();
 
