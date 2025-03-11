@@ -151,6 +151,8 @@ double NAFE13388_Base::calc_delay( int ch )
 												  256, 358, 512, 716, 
 												  1024, 1664, 3276, 7680, 19200, 23040, };
 	
+	command( ch );
+
 	uint16_t ch_config1	= reg( CH_CONFIG1 );
 	uint16_t ch_config2	= reg( CH_CONFIG2 );
 	
@@ -318,7 +320,7 @@ void NAFE13388_Base::recalibrate( int pga_gain_index, int channel_selection, int
 		}
 	}
 	
-	const uint16_t		REF_GND		= 0x0010  | (pga_gain_index << 5);
+	const uint16_t		REF_GND		= 0x0011  | (pga_gain_index << 5);
 	const uint16_t		REF_V		= (input_select << (use_positive_side ? 12 : 8)) | REF_GND;
 	const uint16_t		ch_config1	= (pga_gain_index << 12) | 0x00E4;
 	constexpr uint16_t	ch_config2	= 0x8400;
