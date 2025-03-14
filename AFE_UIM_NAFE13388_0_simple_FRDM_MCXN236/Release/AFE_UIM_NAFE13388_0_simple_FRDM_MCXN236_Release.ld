@@ -6,7 +6,7 @@
  * Generated linker script file for MCXN236
  * Created from linkscript.ldt by FMCreateLinkLibraries
  * Using Freemarker v2.3.30
- * MCUXpresso IDE v24.12 [Build 148] [2025-01-10] on 2025/03/14 17:15:31
+ * MCUXpresso IDE v24.12 [Build 148] [2025-01-10] on 2025/03/15 8:44:54
  */
 
 INCLUDE "AFE_UIM_NAFE13388_0_simple_FRDM_MCXN236_Release_library.ld"

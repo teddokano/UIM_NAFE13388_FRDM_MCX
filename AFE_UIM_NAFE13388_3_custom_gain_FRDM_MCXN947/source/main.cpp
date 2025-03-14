@@ -105,7 +105,7 @@ int main( void )
 
 	//	on-board re-calibration for "PGA_gain = 0.2" coefficients
 
-	afe.self_calibrate( NAFE13388_UIM::GainPGA( 0 ) );
+	afe.self_calibrate( 0 );
 
 	out.printf( "\r\n=== GAIN_COEFF and OFFSET_COEFF registers after on-board calibration ===\r\n" );
 	reg_dump( GAIN_COEFF0, 32 );
