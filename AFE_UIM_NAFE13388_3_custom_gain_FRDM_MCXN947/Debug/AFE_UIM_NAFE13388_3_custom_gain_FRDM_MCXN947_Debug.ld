@@ -6,7 +6,7 @@
  * Generated linker script file for MCXN947
  * Created from linkscript.ldt by FMCreateLinkLibraries
  * Using Freemarker v2.3.30
- * MCUXpresso IDE v24.12 [Build 148] [2025-01-10] on 2025/03/11 15:58:51
+ * MCUXpresso IDE v24.12 [Build 148] [2025-01-10] on 2025/03/14 17:16:19
  */
 
 INCLUDE "AFE_UIM_NAFE13388_3_custom_gain_FRDM_MCXN947_Debug_library.ld"
