@@ -120,15 +120,30 @@ public:
 	 *
 	 * @param ch logical channel number (0 ~ 15)
 	 */
-	virtual raw_t	read( int ch )		= 0;
-	virtual void	read( raw_t *data )	= 0;
+	virtual raw_t	read( int ch )							= 0;
+	virtual void	read( raw_t *data_ptr )					= 0;
+	virtual void	read( std::vector<raw_t>& data_vctr )	= 0;
 
 	/** Start and read ADC
 	 *
 	 * @param ch logical channel number (0 ~ 15)
 	 */
 	virtual raw_t	start_and_read( int ch );
+#if 1
 	virtual void	start_and_read( raw_t *data );
+	virtual void	start_and_read( std::vector<raw_t>& data_vctr );
+#else
+	template<typename T>
+	inline void start_and_read( T data )
+	{
+		double	wait_time	= cbf_DRDY ? -1.0 : total_delay * delay_accuracy;
+		
+		start();
+		wait_conversion_complete( wait_time );
+		
+		read( data );
+	};
+#endif
 	
 	inline double raw2uv( int ch, raw_t value )
 	{
@@ -275,6 +290,7 @@ public:
 	 */
 	virtual raw_t	read( int ch );
 	virtual void	read( raw_t *data );
+	virtual void	read( std::vector<raw_t>& data_vctr );
 
 	constexpr static double	pga_gain[]	= { 0.2, 0.4, 0.8, 1, 2, 4, 8, 16 };
 

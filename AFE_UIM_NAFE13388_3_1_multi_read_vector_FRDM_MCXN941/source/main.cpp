@@ -11,15 +11,6 @@
 SPI				spi( D11, D12, D13, D10 );	//	MOSI, MISO, SCLK, CS
 NAFE13388_UIM	afe( spi );
 
-std::vector<raw_t>	dv( 16 );
-volatile bool		conversion_done	= false;
-
-void drdy_callback( void )
-{
-	afe.read( dv );
-	conversion_done	= true;
-}
-
 int main( void )
 {
 	printf( "***** Hello, NAFE13388 UIM board! *****\r\n" );
@@ -64,19 +55,18 @@ int main( void )
 	printf( "\r\nenabled logical channel(s) %2d\r\n", afe.enabled_logical_channels() );
 	logical_ch_config_view();
 
-	afe.set_DRDY_callback( drdy_callback );
-	afe.start_continuous_conversion();
+	afe.use_DRDY_trigger( true );	//	default = true
+
+	std::vector<raw_t>	dv( 16 );
 
 	while ( true )
 	{
-		if ( conversion_done )
+		afe.start_and_read( dv );
+
+		for ( auto& v: dv )
 		{
-			conversion_done	= false;
-
-			for ( auto&& v: dv )
-				printf( "  %8ld,", v );
-
-			printf( "\r\n" );
+			printf( " %8ld,", v );
 		}
+		printf( "\r\n" );
 	}
 }

@@ -69,15 +69,30 @@ int32_t AFE_base::start_and_read( int ch )
 	return read( ch );
 };
 
-void AFE_base::start_and_read( raw_t *data )
+#if 1
+void AFE_base::start_and_read( raw_t* data )
 {
 	double	wait_time	= cbf_DRDY ? -1.0 : total_delay * delay_accuracy;
 	
 	start();
 	wait_conversion_complete( wait_time );
 	
-	return read( data );
+	read( data );
 };
+
+void AFE_base::start_and_read( std::vector<raw_t>& data )
+{
+	double	wait_time	= cbf_DRDY ? -1.0 : total_delay * delay_accuracy;
+	
+	start();
+	wait_conversion_complete( wait_time );
+	
+	read( data );
+};
+#else
+template void AFE_base::start_and_read( raw_t* data );
+template void AFE_base::start_and_read( std::vector<raw_t>& data );
+#endif
 
 int AFE_base::bit_count( uint32_t value )
 {
@@ -301,6 +316,13 @@ void NAFE13388_Base::read( raw_t *data )
 	burst( (uint32_t *)data, enabled_channels );
 }
 
+void NAFE13388_Base::read( std::vector<raw_t>& data_vctr )
+{
+	raw_t	data[ 16 ];
+	
+	burst( (uint32_t *)data, enabled_channels );
+	std::copy( data, data + enabled_channels, data_vctr.begin() );
+}
 
 void NAFE13388_Base::command( uint16_t com )
 {
