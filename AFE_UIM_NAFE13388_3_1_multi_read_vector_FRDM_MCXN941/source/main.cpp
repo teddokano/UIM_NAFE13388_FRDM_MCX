@@ -55,7 +55,8 @@ int main( void )
 	printf( "\r\nenabled logical channel(s) %2d\r\n", afe.enabled_logical_channels() );
 	logical_ch_config_view();
 
-	afe.use_DRDY_trigger( true );	//	default = true
+	afe.use_DRDY_trigger( true );		//	default = true
+	afe.DRDY_by_sequencer_done( true );	//	generate DRDY at all logical channel conversions are done
 
 	std::vector<raw_t>	dv( 16 );
 

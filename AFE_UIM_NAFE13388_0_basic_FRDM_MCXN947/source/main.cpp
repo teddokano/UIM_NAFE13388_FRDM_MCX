@@ -44,11 +44,11 @@ int main( void )
 	{
 		for ( auto ch = 0; ch < 2; ch++ )
 		{
-			afe.command( CMD_CH0 );
+			afe.command( ch ? CMD_CH1 : CMD_CH0 );
 			afe.command( CMD_SS );
 			wait( 0.1 );
 
-			uint32_t	data	= afe.reg( CH_DATA0 );
+			uint32_t	data	= afe.reg( ch ? CH_DATA1 : CH_DATA0 );
 
 			printf( "     channel %2d: %8ld", ch, data );
 		}

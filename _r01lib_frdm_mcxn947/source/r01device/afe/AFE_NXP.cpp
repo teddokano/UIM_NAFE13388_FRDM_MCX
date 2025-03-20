@@ -157,8 +157,7 @@ void NAFE13388_Base::boot( void )
 	command( CMD_ABORT ); 
 	wait( 0.001 );
 	
-	reg( SYS_CONFIG0,  0x0010 );
-	wait( 0.001 );
+	DRDY_by_sequencer_done( true );
 }
 
 void NAFE13388_Base::reset( bool hardware_reset )
@@ -289,21 +288,23 @@ void NAFE13388_Base::close_logical_channel( void )
 
 void NAFE13388_Base::start( int ch )
 {
-	bit_op( SYS_CONFIG0, ~0x0010, 0x0000 );
 	command( ch     );
 	command( CMD_SS );
 }
 
 void NAFE13388_Base::start( void )
 {
-	bit_op( SYS_CONFIG0, ~0x0010, 0x0010 );
 	command( CMD_MM );
 }
 
 void NAFE13388_Base::start_continuous_conversion( void )
 {
-	bit_op( SYS_CONFIG0, ~0x0010, 0x0010 );
 	command( CMD_MC );
+}
+
+void NAFE13388_Base::DRDY_by_sequencer_done( bool flag )
+{
+	bit_op( SYS_CONFIG0, ~0x0010, flag ? 0x0010 : 0x00 );	
 }
 
 int32_t NAFE13388_Base::read( int ch )

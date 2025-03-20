@@ -48,7 +48,7 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := AFE_UIM_NAFE13388_4_self_calibration_demo_FRDM_MCXN947
+BUILD_ARTIFACT_NAME := AFE_UIM_NAFE13388_6_self_calibration_demo_FRDM_MCXN947
 BUILD_ARTIFACT_EXTENSION := axf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
@@ -60,24 +60,24 @@ all:
 	+@$(MAKE) --no-print-directory main-build && $(MAKE) --no-print-directory post-build
 
 # Main-build Target
-main-build: AFE_UIM_NAFE13388_4_self_calibration_demo_FRDM_MCXN947.axf
+main-build: AFE_UIM_NAFE13388_6_self_calibration_demo_FRDM_MCXN947.axf
 
 # Tool invocations
-AFE_UIM_NAFE13388_4_self_calibration_demo_FRDM_MCXN947.axf: $(OBJS) $(USER_OBJS) makefile $(OPTIONAL_TOOL_DEPS)
+AFE_UIM_NAFE13388_6_self_calibration_demo_FRDM_MCXN947.axf: $(OBJS) $(USER_OBJS) makefile $(OPTIONAL_TOOL_DEPS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: MCU C++ Linker'
-	arm-none-eabi-c++ -nostdlib -L"/Users/tedd/dev/mcuxpresso/UIM_NAFE13388_FRDM_MCX/_r01lib_frdm_mcxn947/Debug" -Xlinker -Map="AFE_UIM_NAFE13388_4_self_calibration_demo_FRDM_MCXN947.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -Xlinker --cref -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -T AFE_UIM_NAFE13388_4_self_calibration_demo_FRDM_MCXN947_Debug.ld -u _printf_float -u _scanf_float -o "AFE_UIM_NAFE13388_4_self_calibration_demo_FRDM_MCXN947.axf" $(OBJS) $(USER_OBJS) $(LIBS) -l_r01lib_frdm_mcxn947
+	arm-none-eabi-c++ -nostdlib -L"/Users/tedd/dev/mcuxpresso/UIM_NAFE13388_FRDM_MCX/_r01lib_frdm_mcxn947/Debug" -Xlinker -Map="AFE_UIM_NAFE13388_6_self_calibration_demo_FRDM_MCXN947.map" -Xlinker --gc-sections -Xlinker -print-memory-usage -Xlinker --sort-section=alignment -Xlinker --cref -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -T AFE_UIM_NAFE13388_6_self_calibration_demo_FRDM_MCXN947_Debug.ld -u _printf_float -u _scanf_float -o "AFE_UIM_NAFE13388_6_self_calibration_demo_FRDM_MCXN947.axf" $(OBJS) $(USER_OBJS) $(LIBS) -l_r01lib_frdm_mcxn947
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) AFE_UIM_NAFE13388_4_self_calibration_demo_FRDM_MCXN947.axf
+	-$(RM) AFE_UIM_NAFE13388_6_self_calibration_demo_FRDM_MCXN947.axf
 	-@echo ' '
 
 post-build:
 	-@echo 'Performing post-build steps'
-	-arm-none-eabi-size "AFE_UIM_NAFE13388_4_self_calibration_demo_FRDM_MCXN947.axf"; # arm-none-eabi-objcopy -v -O binary "AFE_UIM_NAFE13388_4_self_calibration_demo_FRDM_MCXN947.axf" "AFE_UIM_NAFE13388_4_self_calibration_demo_FRDM_MCXN947.bin" ; # checksum -p MCXN947 -d "AFE_UIM_NAFE13388_4_self_calibration_demo_FRDM_MCXN947.bin";
+	-arm-none-eabi-size "AFE_UIM_NAFE13388_6_self_calibration_demo_FRDM_MCXN947.axf"; # arm-none-eabi-objcopy -v -O binary "AFE_UIM_NAFE13388_6_self_calibration_demo_FRDM_MCXN947.axf" "AFE_UIM_NAFE13388_6_self_calibration_demo_FRDM_MCXN947.bin" ; # checksum -p MCXN947 -d "AFE_UIM_NAFE13388_6_self_calibration_demo_FRDM_MCXN947.bin";
 	-@echo ' '
 
 .PHONY: all clean dependents main-build post-build

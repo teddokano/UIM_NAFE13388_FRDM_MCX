@@ -117,6 +117,12 @@ public:
 	virtual void start( void )							= 0;
 	virtual void start_continuous_conversion( void )	= 0;
 
+	/** DRDY event select
+	 *
+	 * @param set true for DRDY by sequencer is done
+	 */	
+	virtual void DRDY_by_sequencer_done( bool flag = true )	= 0;
+
 	/** Read ADC
 	 *
 	 * @param ch logical channel number (0 ~ 15)
@@ -286,6 +292,12 @@ public:
 	virtual void start( void );
 	virtual void start_continuous_conversion();
 
+	/** DRDY event select
+	 *
+	 * @param set true for DRDY by sequencer is done
+	 */	
+	virtual void DRDY_by_sequencer_done( bool flag = true );
+	
 	/** Read ADC
 	 *
 	 * @param ch logical channel number (0 ~ 15)
