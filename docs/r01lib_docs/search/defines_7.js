@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['read_5fbuffer_5fsize_0',['READ_BUFFER_SIZE',['../_s_p_i__for___a_f_e_8cpp.html#a46167a977503a51eb6efe97e870568c3',1,'SPI_for_AFE.cpp']]],
-  ['reg_5frw_5fbuffer_5fsize_1',['REG_RW_BUFFER_SIZE',['../i2c_8h.html#a63640d65f31c8e50210e961ffbcfe7fd',1,'i2c.h']]]
+  ['page_5fread_5fsize_0',['PAGE_READ_SIZE',['../_m24_c02_8cpp.html#ac70b4897c439e224f81aac65d76485a0',1,'M24C02.cpp']]],
+  ['page_5fwrite_5fsize_1',['PAGE_WRITE_SIZE',['../_m24_c02_8cpp.html#a6fb84d0d13e7aeccff26bb1f3f32eb50',1,'M24C02.cpp']]],
+  ['pin_5finput_2',['PIN_INPUT',['../io_8h.html#a5a94a90bd5b33109a2e3832760bc5da1',1,'io.h']]],
+  ['pin_5foutput_3',['PIN_OUTPUT',['../io_8h.html#a16f6fcf4256a279427eb2c243c9e0bd5',1,'io.h']]]
 ];

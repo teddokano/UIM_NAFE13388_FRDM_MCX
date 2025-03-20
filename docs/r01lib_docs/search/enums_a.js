@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['timestanp_5fsetting_0',['timestanp_setting',['../class_p_c_f2131.html#a406a44b72f3996bf10c760e745408840',1,'PCF2131']]],
-  ['ts_5fin_1',['ts_in',['../class_p_c_f85263_a.html#a5a002fd033a255abadc485673a13f632',1,'PCF85263A']]]
+  ['stop_5fcondition_0',['STOP_CONDITION',['../class_i2_c.html#a16f825cf263a78a1c983da06506763f2',1,'I2C']]]
 ];

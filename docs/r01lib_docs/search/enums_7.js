@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['periodic_5fint_5fselect_0',['periodic_int_select',['../class_p_c_f2131.html#afb07387c482fa41981cf77fe11bec637',1,'PCF2131::periodic_int_select'],['../class_p_c_f85263_a.html#ada70b814df16b266ea08c9cb30804396',1,'PCF85263A::periodic_int_select']]],
-  ['pinmode_1',['PinMode',['../class_digital_in_out.html#a7756405060ef1a62957346ba262f9982',1,'DigitalInOut']]]
+  ['misc_0',['MISC',['../class_i3_c.html#a2fe3725df0ba7782c7b1d9059c75ff17',1,'I3C']]],
+  ['mode_1',['MODE',['../class_i3_c.html#a90bae46fc3e240503e1384f4a2a324a8',1,'I3C']]],
+  ['mode_2',['mode',['../class_temp_sensor.html#a04ed17a63cb73f086579970c6b7daa69',1,'TempSensor::mode'],['../classtest___l_m75_b.html#aee2753cd76e582c42cad5c415898bb99',1,'test_LM75B::mode']]]
 ];

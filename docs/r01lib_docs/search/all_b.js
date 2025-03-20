@@ -10,7 +10,7 @@ var searchData=
   ['masterconfig_7',['masterConfig',['../class_i2_c.html#ad3ac8e63765dd4cb1c31f2673fec0ab3',1,'I2C::masterConfig'],['../class_i3_c.html#ad7223ba2ecb5a0bf86e59cb754ba982a',1,'I3C::masterConfig'],['../class_s_p_i.html#a8c66f4b0497cf5edce3e6f4882f529b6',1,'SPI::masterConfig']]],
   ['mcu_2ecpp_8',['mcu.cpp',['../mcu_8cpp.html',1,'']]],
   ['mcu_2eh_9',['mcu.h',['../mcu_8h.html',1,'']]],
-  ['microvolt_5ft_10',['microvolt_t',['../class_n_a_f_e13388___base.html#a8caff946dddbba55e46e284129537762',1,'NAFE13388_Base']]],
+  ['microvolt_5ft_10',['microvolt_t',['../class_a_f_e__base.html#a1b989cf95653ebd96e4a1cebc27a1133',1,'AFE_base']]],
   ['min_5ftimestp_11',['Min_timestp',['../class_p_c_f85053_a.html#ab7f4ad9c87ac514866160f256eb7af1ea7732e0cfadf358ab7db3f3af34fa3593',1,'PCF85053A']]],
   ['min_5ftimestp1_12',['Min_timestp1',['../class_p_c_f2131.html#a683c120c6f40e9e42e93c37adff5b2c5aec08fff6a8db8e508f840aaf0d6f1e96',1,'PCF2131']]],
   ['min_5ftimestp2_13',['Min_timestp2',['../class_p_c_f2131.html#a683c120c6f40e9e42e93c37adff5b2c5afd33b0407bf44abd7830455faf4ef4f5',1,'PCF2131']]],

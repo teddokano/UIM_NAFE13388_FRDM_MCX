@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['unit_5fbase_0',['unit_base',['../class_i2_c.html#a6c44b9051a72a4a0c339256f336a2cd9',1,'I2C']]],
-  ['utick_5ftype_1',['utick_type',['../class_ticker.html#a887d2a6eef5b3f51fae8fbc448a01b1f',1,'Ticker']]]
+  ['timeout_5flimit_0',['timeout_limit',['../class_a_f_e__base.html#a308b9039a3221a2b13f6ebcd1f6605b3',1,'AFE_base']]],
+  ['total_5fdelay_1',['total_delay',['../class_a_f_e__base.html#afebe805e43da330337776aca5fe9cbba',1,'AFE_base']]]
 ];
