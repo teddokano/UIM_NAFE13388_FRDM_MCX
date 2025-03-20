@@ -58,8 +58,6 @@ public:
 	/** ADC readout types */
 	using raw_t								= int32_t;
 	using microvolt_t						= double;
-	constexpr static float immidiate_read	= -1.0;
-	constexpr static float default_delay	= INFINITY;
 
 	/** Constructor to create a AFE_base instance */
 	AFE_base( SPI& spi, int nINT, int DRDY, int SYN, int nRESET );
@@ -107,6 +105,9 @@ public:
 	 * @param ch logical channel number (0 ~ 15)
 	 */
 	virtual void close_logical_channel( int ch )		= 0;
+
+	/** All logical channel disable
+	 */
 	virtual void close_logical_channel( void )			= 0;
 
 	/** Start ADC
@@ -114,7 +115,13 @@ public:
 	 * @param ch logical channel number (0 ~ 15)
 	 */
 	virtual void start( int ch )						= 0;
+
+	/** Start ADC on all logical channel
+	 */
 	virtual void start( void )							= 0;
+
+	/** Start continuous AD conversion
+	 */
 	virtual void start_continuous_conversion( void )	= 0;
 
 	/** DRDY event select
@@ -123,22 +130,42 @@ public:
 	 */	
 	virtual void DRDY_by_sequencer_done( bool flag = true )	= 0;
 
-	/** Read ADC
+	/** Read ADC for single channel
 	 *
 	 * @param ch logical channel number (0 ~ 15)
 	 */
 	virtual raw_t	read( int ch )							= 0;
+
+	/** Read ADC for all channel
+	 *
+	 * @param data_ptr pointer to array to store ADC data
+	 */
 	virtual void	read( raw_t *data_ptr )					= 0;
+
+	/** Read ADC for all channel
+	 *
+	 * @param data_vctr vector object to store ADC data
+	 */
 	virtual void	read( std::vector<raw_t>& data_vctr )	= 0;
 
-	/** Start and read ADC
+	/** Start and read ADC for single  channel
 	 *
 	 * @param ch logical channel number (0 ~ 15)
 	 */
 	virtual raw_t	start_and_read( int ch );
 	
 #ifdef	NON_TEMPLATE_VERSION_FOR_START_AND_READ
-	virtual void	start_and_read( raw_t *data );
+
+	/** Start and read ADC for all channel
+	 *
+	 * @param data_ptr pointer to array to store ADC data
+	 */
+	virtual void	start_and_read( raw_t *data_ptr );
+
+	/** Start and read ADC for all channel
+	 *
+	 * @param data_vctr vector object to store ADC data
+	 */
 	virtual void	start_and_read( std::vector<raw_t>& data_vctr );
 #else
 	template<typename T>
@@ -153,32 +180,56 @@ public:
 	};
 #endif
 	
+	/** Convert raw output to micro-volt
+	 *
+	 * @param ch logical channel number to select its gain coefficient
+	 * @param value ADC read value
+	 */
 	inline double raw2uv( int ch, raw_t value )
 	{
 		return value * coeff_uV[ ch ];
 	}
 	
+	/** Convert raw output to milli-volt
+	 *
+	 * @param ch logical channel number to select its gain coefficient
+	 * @param value ADC read value
+	 */
 	inline double raw2mv( int ch, raw_t value )
 	{
 		return value * coeff_uV[ ch ] * 1e-3;
 	}
 	
+	/** Convert raw output to volt
+	 *
+	 * @param ch logical channel number to select its gain coefficient
+	 * @param value ADC read value
+	 */
 	inline double raw2v( int ch, raw_t value )
 	{
 		return value * coeff_uV[ ch ] * 1e-6;
 	}
 	
-	/** Coefficient to convert from ADC read value to micro-volt */
-	inline double coeff_mV( int ch, raw_t value )
+	/** Coefficient to convert from ADC read value to micro-volt
+	 *
+	 * @param ch logical channel number
+	 */
+	inline double coeff_mV( int ch )
 	{
 		return coeff_uV[ ch ];
 	}
 	
+	/** Caliculated delay from logical channel setting (for single channel)
+	 *
+	 * @param ch logical channel number
+	 */
 	inline double drdy_delay( int ch )
 	{
 		return ch_delay[ ch ];
 	}
 
+	/** Caliculated delay from logical channel setting (for all channels)
+	 */
 	inline double drdy_delay( void )
 	{
 		return total_delay;
@@ -190,6 +241,10 @@ public:
 		return enabled_channels;
 	}
 	
+	/** Switch to use DRDY to start ADC result reading
+	 *
+	 * @param use true (default) to use DRDY. if false, caliculated delay is used to start reading. 
+	 */
 	void	use_DRDY_trigger( bool use = true );
 
 protected:
@@ -282,6 +337,9 @@ public:
 	 * @param ch logical channel number (0 ~ 15)
 	 */
 	virtual void close_logical_channel( int ch );
+
+	/** All logical channel disable
+	 */
 	virtual void close_logical_channel( void );
 
 	/** Start ADC
@@ -289,7 +347,13 @@ public:
 	 * @param ch logical channel number (0 ~ 15)
 	 */
 	virtual void start( int ch );
+
+	/** Start ADC on all logical channel
+	 */
 	virtual void start( void );
+
+	/** Start continuous AD conversion
+	 */
 	virtual void start_continuous_conversion();
 
 	/** DRDY event select
@@ -298,14 +362,24 @@ public:
 	 */	
 	virtual void DRDY_by_sequencer_done( bool flag = true );
 	
-	/** Read ADC
+	/** Read ADC for single channel
 	 *
 	 * @param ch logical channel number (0 ~ 15)
 	 */
 	virtual raw_t	read( int ch );
-	virtual void	read( raw_t *data );
-	virtual void	read( std::vector<raw_t>& data_vctr );
 
+	/** Read ADC for all channel
+	 *
+	 * @param data_ptr pointer to array to store ADC data
+	 */
+	virtual void	read( raw_t *data );
+
+	/** Read ADC for all channel
+	 *
+	 * @param data_vctr vector object to store ADC data
+	 */
+	virtual void	read( std::vector<raw_t>& data_vctr );
+	
 	constexpr static double	pga_gain[]	= { 0.2, 0.4, 0.8, 1, 2, 4, 8, 16 };
 
 	enum GainPGA : uint8_t {
@@ -565,7 +639,6 @@ public:
 	 * @return die temperature in celsius
 	 */
 	float	temperature( void );
-	
 	
 	/** Gain and offset coefficient customization
 	 *
