@@ -64,9 +64,8 @@ int main( void )
 		afe.start_and_read( dv );
 
 		for ( auto& v: dv )
-		{
 			printf( " %8ld,", v );
-		}
+
 		printf( "\r\n" );
 	}
 }

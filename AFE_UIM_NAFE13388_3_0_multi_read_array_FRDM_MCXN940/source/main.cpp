@@ -64,9 +64,8 @@ int main( void )
 		afe.start_and_read( dp );
 
 		for ( auto ch = 0; ch < 16; ch++ )
-		{
 			printf( " %8ld,", dp[ ch ] );
-		}
+
 		printf( "\r\n" );
 	}
 }
