@@ -69,7 +69,7 @@ int32_t AFE_base::start_and_read( int ch )
 	return read( ch );
 };
 
-#if 1
+#ifdef	NON_TEMPLATE_VERSION_FOR_START_AND_READ
 void AFE_base::start_and_read( raw_t* data )
 {
 	double	wait_time	= cbf_DRDY ? -1.0 : total_delay * delay_accuracy;

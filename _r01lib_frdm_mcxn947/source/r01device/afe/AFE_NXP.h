@@ -49,6 +49,7 @@
 #include	<vector>
 #include	<variant>
 
+#define		NON_TEMPLATE_VERSION_FOR_START_AND_READ
 
 class AFE_base : public SPI_for_AFE
 {
@@ -129,7 +130,8 @@ public:
 	 * @param ch logical channel number (0 ~ 15)
 	 */
 	virtual raw_t	start_and_read( int ch );
-#if 1
+	
+#ifdef	NON_TEMPLATE_VERSION_FOR_START_AND_READ
 	virtual void	start_and_read( raw_t *data );
 	virtual void	start_and_read( std::vector<raw_t>& data_vctr );
 #else
