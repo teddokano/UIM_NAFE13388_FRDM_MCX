@@ -438,7 +438,7 @@ int NAFE13388_Base::self_calibrate( int pga_gain_index, int channel_selection, i
 #if 1
 		printf( "==== self-calibration for PGA gain setting: x%3.1lf\r\n", pga_gain[ gain_index ] );
 		printf( "gain = %s\r\n", low_gain ? "low" : "high" );
-		printf( "REF[H|L] = %10.8lfV\r\n", reference_source_voltage );
+		printf( "REF%s = %10.8lfV\r\n", low_gain ? "H" : "L", reference_source_voltage );
 #endif
 	}
 	
