@@ -85,18 +85,28 @@ void set_gain_and_iexc( int g_idx, int i_idx )
 	for ( auto i = 0; i < 4; i++ )
 		afe.open_logical_channel( i, meas[ i ] );
 
+#if 0
 	afe.reg( OFFSET_COEFF8, ofst_cef[ 0 ][ GAIN ] );
 	afe.reg( GAIN_COEFF8,   gain_cef[ 0 ][ GAIN ] );
+#else
+	afe.reg( OFFSET_COEFF8, ofst_cef[ i_idx ][ g_idx ] );
+	afe.reg( GAIN_COEFF8,   gain_cef[ i_idx ][ g_idx ] );
+#endif
 }
 
 #define	MEAS_Pt1000
+//#define	RF1_is_100ohm
 #if 1
 double	voltage2resistance( double v, int i_idx )
 {
 #ifdef	MEAS_Pt1000
-	static constexpr double	k	= 2650.0 / 2667.0;
-	static constexpr double	rzo	= 530e3;
+#ifdef	RF1_is_100ohm
+	static constexpr double	rf1	= 100.0;
+#else
 	static constexpr double	rf1	= 2400.0;
+#endif
+	static constexpr double	k	= 530000.0 / (1000.0 + rf1 + 530000);
+	static constexpr double	rzo	= 530e3;
 
 	return k * -((rzo + rf1) * v) / (v - iexc_val[ i_idx ] * rzo);
 #else
@@ -237,4 +247,8 @@ int main( void )
 		}
 
 	}
+
+	afe.begin();
+	printf( "done.\r\n" );
+
 }
