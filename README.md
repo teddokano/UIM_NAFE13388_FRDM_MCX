@@ -6,10 +6,15 @@ This sample code works on those evaluation boards: **[X-NAFE13388-UIM](https://w
 Supported MCU boards are..
 - [FRDM-MCXN947](https://www.nxp.com/design/design-center/development-boards-and-designs/general-purpose-mcus/frdm-development-board-for-mcx-n94-n54-mcus:FRDM-MCXN947)
 - [FRDM-MCXN236](https://www.nxp.com/design/design-center/development-boards-and-designs/general-purpose-mcus/frdm-development-board-for-mcx-n23x-mcus:FRDM-MCXN236)
-<!-- 
 - [FRDM-MCXA156](https://www.nxp.com/design/design-center/development-boards-and-designs/general-purpose-mcus/frdm-development-board-for-mcx-a14x-a15x-mcus:FRDM-MCXA156)
--->
-- [FRDM-MCXA153](https://www.nxp.com/design/design-center/development-boards-and-designs/general-purpose-mcus/frdm-development-board-for-mcx-a14x-a15x-mcus:FRDM-MCXA153) <-- for basic function demo only
+- [FRDM-MCXA153](https://www.nxp.com/design/design-center/development-boards-and-designs/general-purpose-mcus/frdm-development-board-for-mcx-a14x-a15x-mcus:FRDM-MCXA153)
+
+> **Note**  
+> The FRDM-MCXA156 and FRDM-MCXA153 sample code are available for basic demo only
+
+> **Note**  
+> The **FRDM-MCXA156** board needs modification to connect X-NAFE13388-UIM. In default setting, the SPI pins on D10 and D11 are not connected to Arduino shield connector. **Change jumper settings on R59 and R60 to connect those pins (short pins 2-3)**.
+
 
 The sample code can be build on **[MCUXpresso](https://www.nxp.com/design/design-center/software/development-software/mcuxpresso-software-and-tools-/mcuxpresso-integrated-development-environment-ide:MCUXpresso-IDE)**. 
 
