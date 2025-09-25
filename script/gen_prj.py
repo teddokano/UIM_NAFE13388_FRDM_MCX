@@ -14,10 +14,27 @@ build_configs		= [ "Debug", "Release" ]
 lib_and_template	= "library_and_template_projects"
 
 filehead_text		= "FILEHEAD.txt"
-
+sdk_version_file	= "script/sdk_version_identifier.txt"
 ide					= "/Applications/MCUXpressoIDE_24.9.25/ide/MCUXpressoIDE.app/Contents/MacOS/mcuxpressoide"
 
 def main():
+
+	###
+	### SDK version number update
+	###
+	
+	with open( sdk_version_file ) as f:
+		sdk_version	= f.read()
+	
+	commands	= []
+
+	sdk_version_update_projects	 = [ f"{lib_and_template}/{folder}" for folder in libraries ]
+	sdk_version_update_projects	+= [ f"{lib_and_template}/{app_template_prj}{farget}" for farget in suppported_boards ]
+	
+	for prj in sdk_version_update_projects:
+		commands	+= [ f"sed -i -e s/'<sdkVersion>.*<\/sdkVersion>'/'<sdkVersion>{sdk_version}<\/sdkVersion>'/ {prj}/.cproject" ]
+
+	comm_exec( commands, not args.no_exec )
 
 	###
 	### prepare project information
@@ -61,7 +78,7 @@ def main():
 	### copying projects for each targets
 	###   this part works even if the script deleting projects 
 	###
-	
+
 	for t in target_boards:
 		template	= app_template_prj + t
 		print( "using template : " + template )
