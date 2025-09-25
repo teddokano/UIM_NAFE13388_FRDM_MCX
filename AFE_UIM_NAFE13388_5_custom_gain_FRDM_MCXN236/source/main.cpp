@@ -11,7 +11,7 @@
 #include	<math.h>
 #include	<array>
 
-SPI				spi( D11, D12, D13, D10 );	//	MOSI, MISO, SCLK, CS
+SPI				spi( ARD_MOSI, ARD_MISO, ARD_SCK, ARD_CS );	//	MOSI, MISO, SCLK, CS
 NAFE13388_UIM	afe( spi );
 PrintOutput		out( "test" );
 //PrintOutput	out;			//use this line to disable file output

@@ -11,6 +11,9 @@ extern "C" {
 #include	"fsl_debug_console.h"
 }
 
+#include	<iostream>
+#include	<iomanip>
+
 #if (defined(SDK_DEBUGCONSOLE) && (SDK_DEBUGCONSOLE == DEBUGCONSOLE_REDIRECT_TO_SDK))
 #define printf	DbgConsole_Printf
 #define scanf	DbgConsole_Scanf
@@ -28,8 +31,5 @@ extern "C" {
 #include	"InterruptIn.h"
 #include	"BusInOut.h"
 #include	"mcu.h"
-
-#include	<iostream>
-#include	<iomanip>
 
 #endif // R01LIB_R01LIB_H

@@ -8,7 +8,7 @@
 #include	"afe/NAFE13388_UIM.h"
 #include	"utils.h"
 
-SPI				spi( D11, D12, D13, D10 );	//	MOSI, MISO, SCLK, CS
+SPI				spi( ARD_MOSI, ARD_MISO, ARD_SCK, ARD_CS );	//	MOSI, MISO, SCLK, CS
 NAFE13388_UIM	afe( spi );
 
 int main( void )

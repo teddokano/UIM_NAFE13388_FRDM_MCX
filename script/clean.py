@@ -91,7 +91,14 @@ for target in prjs_path:
 			else:
 				subprocess.run( "rm -rf " + cnfg + "/", shell = True )
 					
-		subprocess.run( "rm *.launch *.mex", shell = True )
+		subprocess.run( "rm -rf *.launch *.mex CMakeLists.txt flags.cmake CMakePresets.json mcux_include.json user_override.cmake .vscode/", shell = True )
+	
+try:
+	os.chdir( base_dir )
+except:
+	pass
+
+subprocess.run( "rm -rf .metadata/.plugins/org.eclipse.cdt.core", shell = True )
 
 print( "" )
 print( "======= process completed for .. =======" )
