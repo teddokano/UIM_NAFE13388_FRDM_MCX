@@ -51,6 +51,7 @@
 #include	<vector>
 #include	<variant>
 #include	<algorithm>
+#include	<functional>
 
 #define		NON_TEMPLATE_VERSION_FOR_START_AND_READ
 
@@ -181,6 +182,17 @@ public:
 		read( data );
 	};
 #endif
+
+	enum LV_mux_sel : uint8_t {
+		REF2_REF2	= 0,
+		GPIO0_GPIO1,
+		REFCOARSE_REF2,
+		VADD_REF2,
+		VHDD_REF2,
+		REF2_VHSS,
+		HV_MUX,
+	};
+
 	
 	/** Convert raw output to micro-volt
 	 *
@@ -189,7 +201,34 @@ public:
 	 */
 	inline double raw2uv( int ch, raw_t value )
 	{
-		return value * coeff_uV[ ch ];
+		double	v	= value * coeff_uV[ ch ];
+
+		if ( HV_MUX != mux_setting[ ch ] )
+		{
+#if 1
+			switch ( mux_setting[ ch ] )
+			{
+				case REF2_REF2:
+				case GPIO0_GPIO1:
+					return v;
+					break;
+				case REFCOARSE_REF2:
+				case VADD_REF2:
+					return 2.00 * (v + 1.5e6);
+					break;
+				case VHDD_REF2:
+					return 32.00 * (v + 0.25e6);
+					break;
+				case REF2_VHSS:
+					return -32.00 * (v - 0.25e6);
+					break;
+			}
+#else
+			return v;
+#endif
+		}
+		
+		return v;
 	}
 	
 	/** Convert raw output to milli-volt
@@ -199,7 +238,7 @@ public:
 	 */
 	inline double raw2mv( int ch, raw_t value )
 	{
-		return value * coeff_uV[ ch ] * 1e-3;
+		return raw2uv( ch, value ) * 1e-3;
 	}
 	
 	/** Convert raw output to volt
@@ -209,7 +248,7 @@ public:
 	 */
 	inline double raw2v( int ch, raw_t value )
 	{
-		return value * coeff_uV[ ch ] * 1e-6;
+		return raw2uv( ch, value ) * 1e-6;
 	}
 	
 	/** Coefficient to convert from ADC read value to micro-volt
@@ -264,6 +303,10 @@ protected:
 	/** Coefficient to convert from ADC read value to micro-volt */
 	double			coeff_uV[ 16 ];
 
+	/** Multiplexer setting */
+	int				mux_setting[ 16 ];
+
+	
 	/** Channel delay */
 	double			ch_delay[ 16 ];
 	double			total_delay;
