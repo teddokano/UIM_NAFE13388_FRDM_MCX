@@ -8,12 +8,7 @@
 #include	"afe/NAFE13388_UIM.h"
 
 SPI				spi( ARD_MOSI, ARD_MISO, ARD_SCK, ARD_CS );	//	MOSI, MISO, SCLK, CS
-
-#ifdef	TARGET_C444
-NAFE13388_UIM	afe( spi, 0, false, D3, D5, D6, D7 );
-#else
 NAFE13388_UIM	afe( spi );
-#endif
 
 using enum	NAFE13388_UIM::Register16;
 using enum	NAFE13388_UIM::Register24;
