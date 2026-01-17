@@ -7,6 +7,9 @@
 #include	"r01lib.h"
 #include	"afe/NAFE13388_UIM.h"
 
+using	microvolt_t		= NAFE13388_Base::microvolt_t;
+using	LogicalChannel	= NAFE13388_UIM::LogicalChannel;
+
 SPI				spi( ARD_MOSI, ARD_MISO, ARD_SCK, ARD_CS );	//	MOSI, MISO, SCLK, CS
 NAFE13388_UIM	afe( spi );
 
@@ -19,20 +22,21 @@ int main( void )
 
 	afe.begin();
 
-	afe.open_logical_channel( 0, 0x1710, 0x00A4, 0xBC00, 0x0000 );
-	afe.open_logical_channel( 1, 0x2710, 0x00A4, 0xBC00, 0x0000 );
+	LogicalChannel	lc0( afe, 0, 0x1710, 0x00A4, 0xBC00, 0x0000 );
+	LogicalChannel	lc1( afe, 1, 0x2710, 0x00A4, 0xBC00, 0x0000 );
 
 	afe.use_DRDY_trigger( false );	//	default = true
 
 	printf( "\r\nenabled logical channel(s) %2d\r\n", afe.enabled_logical_channels() );
 
+	microvolt_t	data0;
+	microvolt_t	data1;
+
 	while ( true )
 	{
-		for ( auto ch = 0; ch < 2; ch++ )
-		{
-			int32_t	data	= afe.start_and_read( ch );
-			printf( "   channel %2d : %8ld (%lfuV),", ch, data, afe.raw2uv( ch, data ) );
-		}
-		printf( "\r\n" );
+		data0	= lc0;	//	read logical channel 0
+		data1	= lc1;	//	read logical channel 1
+
+		printf( "   channel 0 : %12.9lfV,   channel 1 : %12.9lfV\r\n", data0 * 1e-6, data1 * 1e-6 );
 	}
 }

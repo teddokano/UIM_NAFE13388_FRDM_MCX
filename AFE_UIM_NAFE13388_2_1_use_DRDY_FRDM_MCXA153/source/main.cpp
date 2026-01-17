@@ -8,6 +8,9 @@
 #include	"afe/NAFE13388_UIM.h"
 #include	"utils.h"
 
+using	microvolt_t		= NAFE13388_Base::microvolt_t;
+using	LogicalChannel	= NAFE13388_UIM::LogicalChannel;
+
 SPI				spi( ARD_MOSI, ARD_MISO, ARD_SCK, ARD_CS );	//	MOSI, MISO, SCLK, CS
 NAFE13388_UIM	afe( spi );
 
@@ -30,21 +33,24 @@ int main( void )
 	RegVct	registers	= { PN2, PN1, PN0, SERIAL1, SERIAL0, DIE_TEMP, SYS_CONFIG0, SYS_STATUS0 };
 	reg_dump( registers );
 
-	afe.open_logical_channel( 0, 0x1710, 0x00A4, 0xBC00, 0x0000 );
-	afe.open_logical_channel( 1, 0x2710, 0x00A4, 0xBC00, 0x0000 );
-
+	LogicalChannel	lc[]	= {
+		LogicalChannel( afe, 0, 0x1710, 0x00A4, 0xBC00, 0x0000 ),
+		LogicalChannel( afe, 1, 0x2710, 0x00A4, 0xBC00, 0x0000 )
+	};
+	
 	printf( "\r\nenabled logical channel(s) %2d\r\n", afe.enabled_logical_channels() );
 	logical_ch_config_view();
 
 	afe.use_DRDY_trigger( true );	//	default = true
 
+	microvolt_t	data;
+	
 	while ( true )
 	{
 		for ( auto ch = 0; ch < 2; ch++ )
 		{
-			raw_t	data	= afe.start_and_read( ch );
-
-			printf( "   channel %2d : %8ld (%lfuV),", ch, data, afe.raw2uv( ch, data ) );
+			data	= lc[ ch ];
+			printf( "   channel %2d : %12.9lfV,", ch, data * 1e-6 );
 		}
 		printf( "\r\n" );
 	}
