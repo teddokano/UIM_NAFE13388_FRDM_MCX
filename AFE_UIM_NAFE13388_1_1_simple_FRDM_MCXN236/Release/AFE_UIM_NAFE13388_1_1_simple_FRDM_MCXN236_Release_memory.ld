@@ -6,7 +6,7 @@
  * Generated linker script file for MCXN236
  * Created from memory.ldt by FMCreateLinkMemory
  * Using Freemarker v2.3.30
- * MCUXpresso IDE v25.6 [Build 136] [2025-06-27] on 2026/01/18 8:51:35
+ * MCUXpresso IDE v25.6 [Build 136] [2025-06-27] on 2026/01/18 9:03:20
  */
 
 MEMORY
