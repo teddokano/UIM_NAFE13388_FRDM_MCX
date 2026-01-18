@@ -79,7 +79,7 @@ int main( void )
 	//
 
 	for ( auto i = 0U; i < sizeof( chs ) / sizeof( ch_setting_t ); i++ )
-		afe.open_logical_channel( i, chs[ i ] );
+		afe.logical_channel[ i ].configure( chs[ i ] );
 
 	out.printf( "\r\nenabled logical channel(s) %2d\r\n", afe.enabled_logical_channels() );
 	logical_ch_config_view();
@@ -148,7 +148,7 @@ int main( void )
 		
 		for ( auto ch = 0; ch < afe.enabled_logical_channels(); ch++ )
 		{
-			data	= afe.start_and_read( ch );
+			data	= afe.logical_channel[ ch ];
 			out.color( ch % 2 ? PrintOutput::Color::bg_none : PrintOutput::Color::bg_gray );
 			out.printf( " %8ld,", data );
 		}

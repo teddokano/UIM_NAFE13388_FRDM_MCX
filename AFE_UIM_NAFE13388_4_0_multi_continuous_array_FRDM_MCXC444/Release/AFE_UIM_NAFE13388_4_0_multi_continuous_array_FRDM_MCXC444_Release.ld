@@ -6,7 +6,7 @@
  * Generated linker script file for MCXC444
  * Created from linkscript.ldt by FMCreateLinkLibraries
  * Using Freemarker v2.3.30
- * MCUXpresso IDE v25.6 [Build 136] [2025-06-27] on 2026/01/18 9:03:03
+ * MCUXpresso IDE v25.6 [Build 136] [2025-06-27] on 2026/01/18 16:38:50
  */
 
 INCLUDE "AFE_UIM_NAFE13388_4_0_multi_continuous_array_FRDM_MCXC444_Release_library.ld"

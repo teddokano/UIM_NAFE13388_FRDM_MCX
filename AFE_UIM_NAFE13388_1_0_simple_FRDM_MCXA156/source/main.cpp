@@ -7,8 +7,7 @@
 #include	"r01lib.h"
 #include	"afe/NAFE13388_UIM.h"
 
-using	microvolt_t		= NAFE13388_Base::microvolt_t;
-using	LogicalChannel	= NAFE13388_UIM::LogicalChannel;
+using	microvolt_t	= NAFE13388_UIM::microvolt_t;
 
 SPI				spi( ARD_MOSI, ARD_MISO, ARD_SCK, ARD_CS );	//	MOSI, MISO, SCLK, CS
 NAFE13388_UIM	afe( spi );
@@ -22,8 +21,8 @@ int main( void )
 
 	afe.begin();
 
-	LogicalChannel	lc0( afe, 0, 0x1710, 0x00A4, 0xBC00, 0x0000 );
-	LogicalChannel	lc1( afe, 1, 0x2710, 0x00A4, 0xBC00, 0x0000 );
+	afe.logical_channel[ 0 ].configure( 0x1710, 0x00A4, 0xBC00, 0x0000 );
+	afe.logical_channel[ 1 ].configure( 0x2710, 0x00A4, 0xBC00, 0x0000 );
 
 	afe.use_DRDY_trigger( false );	//	default = true
 
@@ -34,8 +33,8 @@ int main( void )
 
 	while ( true )
 	{
-		data0	= lc0;	//	read logical channel 0
-		data1	= lc1;	//	read logical channel 1
+		data0	= afe.logical_channel[ 0 ];	//	read logical channel 0
+		data1	= afe.logical_channel[ 1 ];	//	read logical channel 1
 
 		printf( "   channel 0 : %12.9lfV,   channel 1 : %12.9lfV\r\n", data0 * 1e-6, data1 * 1e-6 );
 	}
